@@ -28,3 +28,24 @@ module "testvm2" {
   vm_disk_size  = 150
   os_type       = "linux"
 }
+
+module "testvm3" {
+  source = "./modules/proxmox-vm"
+
+  vm_name       = "testvm3"
+  target_node   = "proxmox"
+  proxmox_vm_id = 105 # ubuntu-2024-vm-template-8-2025
+  vm_disk_size  = 150
+  os_type       = "linux"
+}
+
+module "testvm4" {
+  source = "./modules/proxmox-vm"
+
+  vm_name       = "testvm4"
+  target_node   = "proxmox"
+  proxmox_vm_id = 105 # ubuntu-2024-vm-template-8-2025
+  vm_disk_size  = 150
+  os_type       = "linux"
+}
+

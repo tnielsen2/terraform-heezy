@@ -10,7 +10,16 @@ resource "proxmox_virtual_environment_vm" "vm" {
     enabled = true
   }
 
-  stop_on_destroy = false
+  stop_on_destroy = true
+  protection      = true # Prevent accidental deletion
+
+  timeout_clone       = 7200 # 2 hours
+  timeout_create      = 7200 # 2 hours
+  timeout_migrate     = 3600 # 1 hour
+  timeout_reboot      = 3600 # 1 hour
+  timeout_shutdown_vm = 3600 # 1 hour
+  timeout_start_vm    = 3600 # 1 hour
+  timeout_stop_vm     = 600  # 10 minutes
 
   cpu {
     cores   = var.vm_cores

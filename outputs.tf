@@ -24,6 +24,16 @@ output "linux_vms" {
       id   = module.testvm2.vm_id
       name = module.testvm2.vm_name
       ip   = module.testvm2.vm_ip
+    },
+    vm3 = {
+      id   = module.testvm3.vm_id
+      name = module.testvm3.vm_name
+      ip   = module.testvm3.vm_ip
+    },
+    vm4 = {
+      id   = module.testvm4.vm_id
+      name = module.testvm4.vm_name
+      ip   = module.testvm4.vm_ip
     }
   }
 }
