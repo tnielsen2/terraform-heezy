@@ -13,6 +13,7 @@ concurrency:
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 
 jobs:
   terraform:
@@ -41,4 +42,57 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan
+        id: plan
+        run: |
+          terraform plan -no-color -out=tfplan
+          terraform show -no-color tfplan > plan.txt
+
+      - name: Comment Plan on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const plan = fs.readFileSync('plan.txt', 'utf8');
+            const body = `## Terraform Plan
+            \`\`\`
+            ${plan}
+            \`\`\``;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: terraform
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/GitHubActions-MultiRepo
+          aws-region: us-east-2
+
+      - name: Assume Terraform role
+        run: |
+          CREDS=$(aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/terraform-proxmox-state-backend --role-session-name terraform-session)
+          echo "AWS_ACCESS_KEY_ID=$(echo $CREDS | jq -r '.Credentials.AccessKeyId')" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=$(echo $CREDS | jq -r '.Credentials.SecretAccessKey')" >> $GITHUB_ENV
+          echo "AWS_SESSION_TOKEN=$(echo $CREDS | jq -r '.Credentials.SessionToken')" >> $GITHUB_ENV
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
