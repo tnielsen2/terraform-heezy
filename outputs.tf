@@ -1,17 +1,16 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
 
-output "windows_vms" {
-  description = "Windows VM information"
-  value = {
-    vm1 = {
-      id   = module.windows_vm1.vm_id
-      name = module.windows_vm1.vm_name
-      ip   = module.windows_vm1.vm_ip
-    }
-
-  }
-}
+# output "windows_vms" {
+#   description = "Windows VM information"
+#   value = {
+#     vm1 = {
+#       id   = module.windows_vm1.vm_id
+#       name = module.windows_vm1.vm_name
+#       ip   = module.windows_vm1.vm_ip
+#     }
+#   }
+# }
 
 output "linux_vms" {
   description = "Linux VM information"

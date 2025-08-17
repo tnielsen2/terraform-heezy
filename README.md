@@ -21,7 +21,6 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_linux_vm1"></a> [linux\_vm1](#module\_linux\_vm1) | ./modules/proxmox-vm | n/a |
-| <a name="module_windows_vm1"></a> [windows\_vm1](#module\_windows\_vm1) | ./modules/proxmox-vm | n/a |
 
 ## Resources
 
@@ -63,7 +62,6 @@
 | [fortios_vpnipsec_phase2interface.aws_tunnel](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/vpnipsec_phase2interface) | resource |
 | [null_resource.ansible_provisioning](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [null_resource.linux_custom_role](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.windows_custom_role](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [aws_secretsmanager_secret_version.fortigate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 | [aws_secretsmanager_secret_version.proxmox](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
@@ -88,5 +86,4 @@
 | <a name="output_rds_endpoints"></a> [rds\_endpoints](#output\_rds\_endpoints) | RDS database endpoints |
 | <a name="output_vpc_info"></a> [vpc\_info](#output\_vpc\_info) | VPC information |
 | <a name="output_vpn_connection"></a> [vpn\_connection](#output\_vpn\_connection) | VPN connection details |
-| <a name="output_windows_vms"></a> [windows\_vms](#output\_windows\_vms) | Windows VM information |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
