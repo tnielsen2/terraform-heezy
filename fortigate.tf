@@ -21,7 +21,6 @@ provider "fortios" {
 
 # AWS Zone for tunnel interface
 resource "fortios_system_zone" "aws" {
-  count = local.enable_aws_resources ? 1 : 0
 
   name      = "AWS"
   intrazone = "deny"
