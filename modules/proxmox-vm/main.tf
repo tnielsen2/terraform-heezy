@@ -8,7 +8,8 @@ resource "proxmox_vm_qemu" "vm" {
   memory  = var.vm_memory
   scsihw  = var.scsihw
 
-  clone_wait = 3600 # 1 hour timeout for clone operations
+  clone_wait = 7200 # 2 hour timeout for clone operations
+  agent      = 1    # Enable QEMU guest agent for better monitoring
 
   disk {
     slot    = 0
@@ -29,8 +30,13 @@ resource "proxmox_vm_qemu" "vm" {
   }
 
   timeouts {
-    create = "60m"
-    update = "60m"
+    create = "120m" # Increased to 2 hours
+    update = "120m"
     delete = "10m"
+  }
+
+  provisioner "local-exec" {
+    command     = "ansible-playbook -i '${self.default_ipv4_address},' playbook.yml"
+    working_dir = "../../ansible-runner-bootstrap"
   }
 }

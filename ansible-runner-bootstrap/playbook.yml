@@ -22,6 +22,10 @@
           - git
           - gpg
           - lsb-release
+          - ca-certificates
+          - gnupg
+          - software-properties-common
+          - apt-transport-https
         state: present
         
     - name: Install AWS CLI
@@ -49,6 +53,54 @@
           loop:
             - /tmp/awscliv2.zip
             - /tmp/aws
+            
+    - name: Install Docker
+      block:
+        - name: Add Docker GPG key
+          apt_key:
+            url: https://download.docker.com/linux/ubuntu/gpg
+            state: present
+            
+        - name: Add Docker repository
+          apt_repository:
+            repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+            state: present
+            
+        - name: Install Docker
+          apt:
+            name:
+              - docker-ce
+              - docker-ce-cli
+              - containerd.io
+              - docker-buildx-plugin
+              - docker-compose-plugin
+            state: present
+            update_cache: yes
+            
+        - name: Add runner user to docker group
+          user:
+            name: runner
+            groups: docker
+            append: yes
+            
+    - name: Install GitHub CLI
+      block:
+        - name: Add GitHub CLI GPG key
+          apt_key:
+            url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+            keyring: /usr/share/keyrings/githubcli-archive-keyring.gpg
+            state: present
+            
+        - name: Add GitHub CLI repository
+          apt_repository:
+            repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+            state: present
+            
+        - name: Install GitHub CLI
+          apt:
+            name: gh
+            state: present
+            update_cache: yes
             
     - name: Download HashiCorp GPG key
       get_url:
@@ -81,7 +133,9 @@
         name: runner
         shell: /bin/bash
         create_home: yes
-        groups: sudo
+        groups: 
+          - sudo
+          - docker
         
     - name: Create actions-runner directory
       file:
@@ -109,7 +163,7 @@
         url: "https://api.github.com/repos/{{ github_repo }}/actions/runners/registration-token"
         method: POST
         headers:
-          Authorization: "token {{ github_token }}"
+          Authorization: "Bearer {{ github_token }}"
           Accept: "application/vnd.github.v3+json"
         status_code: 201
       register: token_response
@@ -139,3 +193,17 @@
       file:
         path: /tmp/actions-runner.tar.gz
         state: absent
+        
+    - name: Verify Docker Buildx
+      command: docker buildx version
+      become_user: runner
+      register: buildx_version
+      
+    - name: Display installed versions
+      debug:
+        msg:
+          - "AWS CLI: {{ ansible_facts['packages']['awscli'][0]['version'] | default('installed') }}"
+          - "Docker: {{ ansible_facts['packages']['docker-ce'][0]['version'] | default('installed') }}"
+          - "GitHub CLI: {{ ansible_facts['packages']['gh'][0]['version'] | default('installed') }}"
+          - "Terraform: {{ ansible_facts['packages']['terraform'][0]['version'] | default('installed') }}"
+          - "Docker Buildx: {{ buildx_version.stdout }}"

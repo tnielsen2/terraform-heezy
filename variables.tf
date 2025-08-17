@@ -1,5 +1,8 @@
-# Copyright (c) HashiCorp, Inc.
-# SPDX-License-Identifier: MPL-2.0
+variable "project_name" {
+  type        = string
+  description = "Heezy Proxmox VM Provisioning"
+  default     = "terraform-proxmox"
+}
 
 variable "region" {
   type        = string
@@ -7,8 +10,32 @@ variable "region" {
   default     = "us-east-2"
 }
 
-variable "project_name" {
+variable "ansible_repo" {
   type        = string
-  description = "Heezy Proxmox VM Provisioning"
-  default     = "terraform-proxmox"
+  description = "GitHub repository for Ansible automation"
+  default     = "your-org/ansible-automation"
+}
+
+variable "ansible_playbook" {
+  type        = string
+  description = "Default Ansible playbook to run"
+  default     = "vm-bootstrap"
+}
+
+variable "ansible_custom_role" {
+  type        = string
+  description = "Custom Ansible role to apply (overrides default)"
+  default     = ""
+}
+
+variable "ansible_linux_role" {
+  type        = string
+  description = "Specific role for Linux VM (e.g., minecraft-server)"
+  default     = ""
+}
+
+variable "ansible_windows_role" {
+  type        = string
+  description = "Specific role for Windows VM (e.g., game-server)"
+  default     = ""
 }

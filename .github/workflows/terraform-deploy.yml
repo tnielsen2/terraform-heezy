@@ -19,6 +19,7 @@ permissions:
 jobs:
   get-runner-credentials:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     outputs:
       runner-access-key: ${{ steps.get-creds.outputs.access-key }}
       runner-secret-key: ${{ steps.get-creds.outputs.secret-key }}
@@ -39,6 +40,7 @@ jobs:
   terraform:
     needs: get-runner-credentials
     runs-on: self-hosted
+    timeout-minutes: 180  # 3 hours for Proxmox operations
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,7 +51,7 @@ jobs:
           TERRAFORM_CREDS=$(AWS_ACCESS_KEY_ID=${{ needs.get-runner-credentials.outputs.runner-access-key }} \
           AWS_SECRET_ACCESS_KEY=${{ needs.get-runner-credentials.outputs.runner-secret-key }} \
           AWS_DEFAULT_REGION=us-east-2 \
-          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/productionATerraformStateBackend --role-session-name terraform-session)
+          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/terraform-heezy-state --role-session-name terraform-session)
           
           # Run Terraform with assumed role
           AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId') \
@@ -90,6 +92,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: [get-runner-credentials, terraform]
     runs-on: self-hosted
+    timeout-minutes: 180  # 3 hours for Proxmox operations
     environment: production
     concurrency:
       group: terraform-deploy
@@ -104,7 +107,7 @@ jobs:
           TERRAFORM_CREDS=$(AWS_ACCESS_KEY_ID=${{ needs.get-runner-credentials.outputs.runner-access-key }} \
           AWS_SECRET_ACCESS_KEY=${{ needs.get-runner-credentials.outputs.runner-secret-key }} \
           AWS_DEFAULT_REGION=us-east-2 \
-          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/productionATerraformStateBackend --role-session-name terraform-session)
+          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/terraform-heezy-state --role-session-name terraform-session)
           
           # Run Terraform with assumed role
           AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId') \

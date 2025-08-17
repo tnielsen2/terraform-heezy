@@ -21,6 +21,7 @@ provider "fortios" {
 
 # AWS Zone for tunnel interface
 resource "fortios_system_zone" "aws" {
+  count = local.enable_aws_resources ? 1 : 0
 
   name      = "AWS"
   intrazone = "deny"
@@ -31,8 +32,6 @@ resource "fortios_system_zone" "aws" {
 
 # Update existing zones to default deny
 resource "fortios_system_zone" "servers_update" {
-  count = local.enable_aws_resources ? 1 : 0
-
   name      = "SERVERS"
   intrazone = "deny"
   interface {
@@ -41,8 +40,6 @@ resource "fortios_system_zone" "servers_update" {
 }
 
 resource "fortios_system_zone" "users_update" {
-  count = local.enable_aws_resources ? 1 : 0
-
   name      = "USERS"
   intrazone = "deny"
   interface {

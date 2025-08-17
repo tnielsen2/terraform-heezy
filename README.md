@@ -14,6 +14,7 @@
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 5.100.0 |
 | <a name="provider_fortios"></a> [fortios](#provider\_fortios) | 1.22.1 |
+| <a name="provider_null"></a> [null](#provider\_null) | 3.2.4 |
 
 ## Modules
 
@@ -60,6 +61,9 @@
 | [fortios_system_zone.users_update](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
 | [fortios_vpnipsec_phase1interface.aws_tunnel](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/vpnipsec_phase1interface) | resource |
 | [fortios_vpnipsec_phase2interface.aws_tunnel](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/vpnipsec_phase2interface) | resource |
+| [null_resource.ansible_provisioning](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.linux_custom_role](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.windows_custom_role](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [aws_secretsmanager_secret_version.fortigate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 | [aws_secretsmanager_secret_version.proxmox](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
@@ -67,6 +71,11 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_ansible_custom_role"></a> [ansible\_custom\_role](#input\_ansible\_custom\_role) | Custom Ansible role to apply (overrides default) | `string` | `""` | no |
+| <a name="input_ansible_linux_role"></a> [ansible\_linux\_role](#input\_ansible\_linux\_role) | Specific role for Linux VM (e.g., minecraft-server) | `string` | `""` | no |
+| <a name="input_ansible_playbook"></a> [ansible\_playbook](#input\_ansible\_playbook) | Default Ansible playbook to run | `string` | `"vm-bootstrap"` | no |
+| <a name="input_ansible_repo"></a> [ansible\_repo](#input\_ansible\_repo) | GitHub repository for Ansible automation | `string` | `"your-org/ansible-automation"` | no |
+| <a name="input_ansible_windows_role"></a> [ansible\_windows\_role](#input\_ansible\_windows\_role) | Specific role for Windows VM (e.g., game-server) | `string` | `""` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Heezy Proxmox VM Provisioning | `string` | `"terraform-proxmox"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Default AWS Region | `string` | `"us-east-2"` | no |
 
