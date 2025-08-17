@@ -1,7 +1,7 @@
 # FortiGate and IPSec tunnel configuration
 
 data "aws_secretsmanager_secret_version" "fortigate" {
-  secret_id = "production/terraform-proxmox/heezy/fortigate/secret"
+  secret_id = "production/heezy/terraform/fortigate/secret"
 }
 
 locals {

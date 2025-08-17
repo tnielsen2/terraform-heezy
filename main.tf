@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 data "aws_secretsmanager_secret_version" "proxmox" {
-  secret_id = "production/terraform-proxmox/heezy/proxmox/secret"
+  secret_id = "production/heezy/terraform/proxmox/secret"
 }
 
 locals {
