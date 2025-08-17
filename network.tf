@@ -92,18 +92,18 @@ resource "fortios_vpnipsec_phase2interface" "aws_tunnel" {
 
 # BGP Configuration
 resource "fortios_router_bgp" "main" {
-  as_number = 65002
+  as        = 65002
   router_id = "192.168.1.1"
+}
 
-  neighbor {
-    ip               = aws_vpn_connection.main.tunnel1_cgw_inside_address
-    remote_as        = 64512
-    soft_reconfiguration = "enable"
-  }
+resource "fortios_routerbgp_neighbor" "aws" {
+  ip                   = aws_vpn_connection.main.tunnel1_cgw_inside_address
+  remote_as            = 64512
+  soft_reconfiguration = "enable"
+}
 
-  network {
-    prefix = "192.168.0.0/16"
-  }
+resource "fortios_routerbgp_network" "onprem" {
+  prefix = "192.168.0.0/16"
 }
 
 # Segmented firewall policies
@@ -189,6 +189,6 @@ resource "fortios_firewall_policy" "deny_users_to_servers" {
     name = "ALL"
   }
 
-  schedule = "always"
+  schedule   = "always"
   logtraffic = "all"
 }
