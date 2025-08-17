@@ -23,6 +23,7 @@
 | <a name="module_testvm1"></a> [testvm1](#module\_testvm1) | ./modules/proxmox-vm | n/a |
 | <a name="module_testvm2"></a> [testvm2](#module\_testvm2) | ./modules/proxmox-vm | n/a |
 | <a name="module_testvm3"></a> [testvm3](#module\_testvm3) | ./modules/proxmox-vm | n/a |
+| <a name="module_testvm4"></a> [testvm4](#module\_testvm4) | ./modules/proxmox-vm | n/a |
 
 ## Resources
 
