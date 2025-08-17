@@ -14,7 +14,7 @@ module "linux_vm1" {
 
   vm_name       = "ubuntu-vm-01"
   target_node   = "proxmox"
-  proxmox_vm_id = 108 # ubuntu-2404-vm-template
+  proxmox_vm_id = 104 # ubuntu-2404-vm-template
   vm_disk_size  = 150
   os_type       = "linux"
 }

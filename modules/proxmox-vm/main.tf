@@ -10,6 +10,9 @@ resource "proxmox_virtual_environment_vm" "vm" {
     enabled = true
   }
 
+  # Force stop instead of shutdown if agent is disabled
+  stop_on_destroy = false
+
   cpu {
     cores   = var.vm_cores
     sockets = 1

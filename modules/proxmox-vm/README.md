@@ -40,6 +40,6 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_vm_id"></a> [vm\_id](#output\_vm\_id) | ID of the created VM |
-| <a name="output_vm_ip"></a> [vm\_ip](#output\_vm\_ip) | IP address of the VM |
+| <a name="output_vm_ip"></a> [vm\_ip](#output\_vm\_ip) | IP address of the VM (requires guest agent) |
 | <a name="output_vm_name"></a> [vm\_name](#output\_vm\_name) | Name of the created VM |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
