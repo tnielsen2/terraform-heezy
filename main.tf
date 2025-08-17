@@ -5,6 +5,10 @@ data "aws_secretsmanager_secret_version" "proxmox" {
   secret_id = "production/terraform-proxmox/heezy/proxmox/secret"
 }
 
+data "aws_ssm_parameter" "public_ip" {
+  name = "/production/terraform-proxmox/heezy/network/public_ip"
+}
+
 locals {
   proxmox_creds = jsondecode(data.aws_secretsmanager_secret_version.proxmox.secret_string)
 }
