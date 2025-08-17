@@ -10,7 +10,6 @@ resource "proxmox_virtual_environment_vm" "vm" {
     enabled = true
   }
 
-  # Force stop instead of shutdown if agent is disabled
   stop_on_destroy = false
 
   cpu {
@@ -30,10 +29,5 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   network_device {
     bridge = "vmbr0"
-  }
-
-  provisioner "local-exec" {
-    command     = "ansible-playbook -i '${self.ipv4_addresses[1][0]},' playbook.yml"
-    working_dir = "../../ansible-runner-bootstrap"
   }
 }
