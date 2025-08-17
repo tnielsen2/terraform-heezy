@@ -9,7 +9,7 @@ locals {
 }
 
 provider "fortios" {
-  hostname = "192.168.1.1"
+  hostname = "192.168.1.1:8443"
   username = local.fortigate_creds.username
   password = local.fortigate_creds.password
   insecure = "true"
