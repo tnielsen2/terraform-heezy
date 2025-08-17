@@ -53,7 +53,7 @@ resource "aws_internet_gateway" "main" {
 # Customer Gateway (FortiGate)
 resource "aws_customer_gateway" "fortigate" {
   bgp_asn    = 65000
-  ip_address = "YOUR_PUBLIC_IP" # Replace with your public IP
+  ip_address = "68.55.23.111"
   type       = "ipsec.1"
 
   tags = merge(local.common_tags, {
@@ -91,25 +91,6 @@ resource "aws_vpn_connection_route" "on_premises" {
 # Cloud WAN Core Network
 resource "aws_networkmanager_core_network" "main" {
   global_network_id = aws_networkmanager_global_network.main.id
-  policy_document = jsonencode({
-    version = "2021.12"
-    core-network-configuration = {
-      asn-ranges = ["64512-65534"]
-      edge-locations = [
-        {
-          location = var.region
-          asn      = 64512
-        }
-      ]
-    }
-    segments = [
-      {
-        name                          = "shared"
-        description                   = "Shared segment"
-        require-attachment-acceptance = false
-      }
-    ]
-  })
 
   tags = merge(local.common_tags, {
     Name = "heezy-core-network"

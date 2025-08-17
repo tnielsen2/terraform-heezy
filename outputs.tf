@@ -9,11 +9,7 @@ output "windows_vms" {
       name = module.windows_vm1.vm_name
       ip   = module.windows_vm1.vm_ip
     }
-    vm2 = {
-      id   = module.windows_vm2.vm_id
-      name = module.windows_vm2.vm_name
-      ip   = module.windows_vm2.vm_ip
-    }
+
   }
 }
 
