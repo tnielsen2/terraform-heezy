@@ -4,15 +4,25 @@
 #
 #   vm_name       = "windows-vm-01"
 #   target_node   = "proxmox"
-#   proxmox_vm_id = "100" # server-2019-vm-template
+#   template_name = "100" # server-2019-vm-template
 #   vm_disk_size  = 100
 #   os_type       = "windows"
 # }
 
-module "linux_vm1" {
+module "testvm1" {
   source = "./modules/proxmox-vm"
 
-  vm_name       = "ubuntu-vm-01"
+  vm_name       = "testvm1"
+  target_node   = "proxmox"
+  proxmox_vm_id = 105 # ubuntu-2024-vm-template-8-2025
+  vm_disk_size  = 150
+  os_type       = "linux"
+}
+
+module "testvm2" {
+  source = "./modules/proxmox-vm"
+
+  vm_name       = "testvm2"
   target_node   = "proxmox"
   proxmox_vm_id = 105 # ubuntu-2024-vm-template-8-2025
   vm_disk_size  = 150

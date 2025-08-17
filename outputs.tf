@@ -16,9 +16,14 @@ output "linux_vms" {
   description = "Linux VM information"
   value = {
     vm1 = {
-      id   = module.linux_vm1.vm_id
-      name = module.linux_vm1.vm_name
-      ip   = module.linux_vm1.vm_ip
+      id   = module.testvm1.vm_id
+      name = module.testvm1.vm_name
+      ip   = module.testvm1.vm_ip
+    },
+    vm2 = {
+      id   = module.testvm2.vm_id
+      name = module.testvm2.vm_name
+      ip   = module.testvm2.vm_ip
     }
   }
 }

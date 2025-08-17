@@ -15,13 +15,13 @@
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 5.100.0 |
 | <a name="provider_fortios"></a> [fortios](#provider\_fortios) | 1.22.1 |
-| <a name="provider_null"></a> [null](#provider\_null) | 3.2.4 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_linux_vm1"></a> [linux\_vm1](#module\_linux\_vm1) | ./modules/proxmox-vm | n/a |
+| <a name="module_testvm1"></a> [testvm1](#module\_testvm1) | ./modules/proxmox-vm | n/a |
+| <a name="module_testvm2"></a> [testvm2](#module\_testvm2) | ./modules/proxmox-vm | n/a |
 
 ## Resources
 
@@ -60,8 +60,6 @@
 | [fortios_system_zone.aws](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
 | [fortios_vpnipsec_phase1interface.aws_tunnel](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/vpnipsec_phase1interface) | resource |
 | [fortios_vpnipsec_phase2interface.aws_tunnel](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/vpnipsec_phase2interface) | resource |
-| [null_resource.ansible_provisioning](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.linux_custom_role](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [aws_secretsmanager_secret_version.fortigate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 | [aws_secretsmanager_secret_version.proxmox](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
