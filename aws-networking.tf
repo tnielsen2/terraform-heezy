@@ -53,7 +53,7 @@ resource "aws_internet_gateway" "main" {
 # Customer Gateway (FortiGate)
 resource "aws_customer_gateway" "fortigate" {
   bgp_asn    = 65000
-  ip_address = data.aws_ssm_parameter.public_ip.value
+  ip_address = "68.55.23.111"
   type       = "ipsec.1"
 
   tags = merge(local.common_tags, {
