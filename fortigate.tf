@@ -31,21 +31,21 @@ resource "fortios_system_zone" "aws" {
 }
 
 # Update existing zones to default deny
-resource "fortios_system_zone" "servers_update" {
-  name      = "SERVERS"
-  intrazone = "deny"
-  interface {
-    interface_name = "internal7"
-  }
-}
+# resource "fortios_system_zone" "servers_update" {
+#   name      = "SERVERS"
+#   intrazone = "deny"
+#   interface {
+#     interface_name = "internal7"
+#   }
+# }
 
-resource "fortios_system_zone" "users_update" {
-  name      = "USERS"
-  intrazone = "deny"
-  interface {
-    interface_name = "FGT-Switch"
-  }
-}
+# resource "fortios_system_zone" "users_update" {
+#   name      = "USERS"
+#   intrazone = "deny"
+#   interface {
+#     interface_name = "FGT-Switch"
+#   }
+# }
 
 # Address objects for networks
 resource "fortios_firewall_address" "servers" {
@@ -133,94 +133,94 @@ resource "fortios_routerbgp_network" "onprem" {
 }
 
 # Segmented firewall policies
-resource "fortios_firewall_policy" "servers_to_aws" {
-  count = local.enable_aws_resources ? 1 : 0
+# resource "fortios_firewall_policy" "servers_to_aws" {
+#   count = local.enable_aws_resources ? 1 : 0
+#
+#   policyid = 10
+#   name     = "servers-to-aws"
+#   action   = "accept"
+#
+#   srcintf {
+#     name = "SERVERS"
+#   }
+#
+#   dstintf {
+#     name = "AWS"
+#   }
+#
+#   srcaddr {
+#     name = fortios_firewall_address.servers[0].name
+#   }
+#
+#   dstaddr {
+#     name = fortios_firewall_address.aws_vpc[0].name
+#   }
+#
+#   service {
+#     name = "ALL"
+#   }
+#
+#   schedule = "always"
+# }
 
-  policyid = 10
-  name     = "servers-to-aws"
-  action   = "accept"
-
-  srcintf {
-    name = "SERVERS"
-  }
-
-  dstintf {
-    name = "AWS"
-  }
-
-  srcaddr {
-    name = fortios_firewall_address.servers[0].name
-  }
-
-  dstaddr {
-    name = fortios_firewall_address.aws_vpc[0].name
-  }
-
-  service {
-    name = "ALL"
-  }
-
-  schedule = "always"
-}
-
-resource "fortios_firewall_policy" "aws_to_servers" {
-  count = local.enable_aws_resources ? 1 : 0
-
-  policyid = 11
-  name     = "aws-to-servers"
-  action   = "accept"
-
-  srcintf {
-    name = "AWS"
-  }
-
-  dstintf {
-    name = "SERVERS"
-  }
-
-  srcaddr {
-    name = fortios_firewall_address.aws_vpc[0].name
-  }
-
-  dstaddr {
-    name = fortios_firewall_address.servers[0].name
-  }
-
-  service {
-    name = "ALL"
-  }
-
-  schedule = "always"
-}
+# resource "fortios_firewall_policy" "aws_to_servers" {
+#   count = local.enable_aws_resources ? 1 : 0
+#
+#   policyid = 11
+#   name     = "aws-to-servers"
+#   action   = "accept"
+#
+#   srcintf {
+#     name = "AWS"
+#   }
+#
+#   dstintf {
+#     name = "SERVERS"
+#   }
+#
+#   srcaddr {
+#     name = fortios_firewall_address.aws_vpc[0].name
+#   }
+#
+#   dstaddr {
+#     name = fortios_firewall_address.servers[0].name
+#   }
+#
+#   service {
+#     name = "ALL"
+#   }
+#
+#   schedule = "always"
+# }
 
 # Deny inter-zone traffic by default (explicit)
-resource "fortios_firewall_policy" "deny_users_to_servers" {
-  count = local.enable_aws_resources ? 1 : 0
-
-  policyid = 20
-  name     = "deny-users-to-servers"
-  action   = "deny"
-
-  srcintf {
-    name = "USERS"
-  }
-
-  dstintf {
-    name = "SERVERS"
-  }
-
-  srcaddr {
-    name = "all"
-  }
-
-  dstaddr {
-    name = "all"
-  }
-
-  service {
-    name = "ALL"
-  }
-
-  schedule   = "always"
-  logtraffic = "all"
-}
+# resource "fortios_firewall_policy" "deny_users_to_servers" {
+#   count = local.enable_aws_resources ? 1 : 0
+#
+#   policyid = 20
+#   name     = "deny-users-to-servers"
+#   action   = "deny"
+#
+#   srcintf {
+#     name = "USERS"
+#   }
+#
+#   dstintf {
+#     name = "SERVERS"
+#   }
+#
+#   srcaddr {
+#     name = "all"
+#   }
+#
+#   dstaddr {
+#     name = "all"
+#   }
+#
+#   service {
+#     name = "ALL"
+#   }
+#
+#   schedule   = "always"
+#   logtraffic = "all"
+# }

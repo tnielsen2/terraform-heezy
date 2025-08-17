@@ -49,15 +49,10 @@
 | [fortios_firewall_address.onprem_summary](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_address.servers](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_address.users](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
-| [fortios_firewall_policy.aws_to_servers](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
-| [fortios_firewall_policy.deny_users_to_servers](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
-| [fortios_firewall_policy.servers_to_aws](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_router_bgp.main](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/router_bgp) | resource |
 | [fortios_routerbgp_neighbor.aws](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/routerbgp_neighbor) | resource |
 | [fortios_routerbgp_network.onprem](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/routerbgp_network) | resource |
 | [fortios_system_zone.aws](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
-| [fortios_system_zone.servers_update](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
-| [fortios_system_zone.users_update](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
 | [fortios_vpnipsec_phase1interface.aws_tunnel](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/vpnipsec_phase1interface) | resource |
 | [fortios_vpnipsec_phase2interface.aws_tunnel](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/vpnipsec_phase2interface) | resource |
 | [null_resource.ansible_provisioning](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
