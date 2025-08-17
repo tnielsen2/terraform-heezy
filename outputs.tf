@@ -32,9 +32,9 @@ output "linux_vms" {
 output "vpc_info" {
   description = "VPC information"
   value = {
-    vpc_id     = aws_vpc.main.id
-    vpc_cidr   = aws_vpc.main.cidr_block
-    public_subnet = aws_subnet.public.id
+    vpc_id         = aws_vpc.main.id
+    vpc_cidr       = aws_vpc.main.cidr_block
+    public_subnet  = aws_subnet.public.id
     private_subnet = aws_subnet.private.id
   }
 }

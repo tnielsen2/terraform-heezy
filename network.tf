@@ -17,23 +17,23 @@ provider "fortios" {
 
 # IPSec Phase 1 Interface
 resource "fortios_vpnipsec_phase1interface" "aws_tunnel" {
-  name           = "aws-tunnel"
-  interface      = "wan1"
-  peertype       = "any"
-  proposal       = "aes128-sha256 aes256-sha256"
-  dhgrp          = "14 5"
-  remote_gw      = aws_vpn_connection.main.tunnel1_address
-  psksecret      = aws_vpn_connection.main.tunnel1_preshared_key
-  dpd_retrycount = 3
+  name              = "aws-tunnel"
+  interface         = "wan1"
+  peertype          = "any"
+  proposal          = "aes128-sha256 aes256-sha256"
+  dhgrp             = "14 5"
+  remote_gw         = aws_vpn_connection.main.tunnel1_address
+  psksecret         = aws_vpn_connection.main.tunnel1_preshared_key
+  dpd_retrycount    = 3
   dpd_retryinterval = 60
 }
 
 # IPSec Phase 2 Interface
 resource "fortios_vpnipsec_phase2interface" "aws_tunnel" {
-  name      = "aws-tunnel"
+  name       = "aws-tunnel"
   phase1name = fortios_vpnipsec_phase1interface.aws_tunnel.name
-  proposal  = "aes128-sha1 aes256-sha1"
-  dhgrp     = "5 14"
+  proposal   = "aes128-sha1 aes256-sha1"
+  dhgrp      = "5 14"
   src_subnet = "192.168.1.0/24"
   dst_subnet = "10.0.0.0/16"
 }
@@ -51,26 +51,26 @@ resource "fortios_firewall_policy" "vpn_policy" {
   policyid = 10
   name     = "aws-vpn-policy"
   action   = "accept"
-  
+
   srcintf {
     name = "internal"
   }
-  
+
   dstintf {
     name = fortios_vpnipsec_phase1interface.aws_tunnel.name
   }
-  
+
   srcaddr {
     name = "all"
   }
-  
+
   dstaddr {
     name = "all"
   }
-  
+
   service {
     name = "ALL"
   }
-  
+
   schedule = "always"
 }

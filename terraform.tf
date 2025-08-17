@@ -1,11 +1,11 @@
 
 terraform {
   backend "s3" {
-    bucket         = "terraform-proxmox-state-backend"
-    key            = "heezy/state/terraform.tfstate"
-    region         = "us-east-2"
-    use_lockfile   = true
-    encrypt        = true
+    bucket       = "terraform-proxmox-state-backend"
+    key          = "heezy/state/terraform.tfstate"
+    region       = "us-east-2"
+    use_lockfile = true
+    encrypt      = true
   }
   required_providers {
     aws = {
@@ -13,7 +13,7 @@ terraform {
       version = "~> 5.0"
     }
     proxmox = {
-      source  = "telmate/proxmox"
+      source = "telmate/proxmox"
     }
     fortios = {
       source  = "fortinetdev/fortios"

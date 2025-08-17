@@ -12,7 +12,7 @@ resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support   = true
-  
+
   tags = merge(local.common_tags, {
     Name = "heezy-main-vpc"
   })
@@ -24,7 +24,7 @@ resource "aws_subnet" "public" {
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "${var.region}a"
   map_public_ip_on_launch = true
-  
+
   tags = merge(local.common_tags, {
     Name = "heezy-public-subnet"
   })
@@ -35,7 +35,7 @@ resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
   availability_zone = "${var.region}b"
-  
+
   tags = merge(local.common_tags, {
     Name = "heezy-private-subnet"
   })
@@ -44,7 +44,7 @@ resource "aws_subnet" "private" {
 # Internet Gateway
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
-  
+
   tags = merge(local.common_tags, {
     Name = "heezy-igw"
   })
@@ -53,9 +53,9 @@ resource "aws_internet_gateway" "main" {
 # Customer Gateway (FortiGate)
 resource "aws_customer_gateway" "fortigate" {
   bgp_asn    = 65000
-  ip_address = "YOUR_PUBLIC_IP"  # Replace with your public IP
+  ip_address = "YOUR_PUBLIC_IP" # Replace with your public IP
   type       = "ipsec.1"
-  
+
   tags = merge(local.common_tags, {
     Name = "heezy-fortigate-cgw"
   })
@@ -64,7 +64,7 @@ resource "aws_customer_gateway" "fortigate" {
 # VPN Gateway
 resource "aws_vpn_gateway" "main" {
   vpc_id = aws_vpc.main.id
-  
+
   tags = merge(local.common_tags, {
     Name = "heezy-vpn-gateway"
   })
@@ -76,7 +76,7 @@ resource "aws_vpn_connection" "main" {
   customer_gateway_id = aws_customer_gateway.fortigate.id
   type                = "ipsec.1"
   static_routes_only  = true
-  
+
   tags = merge(local.common_tags, {
     Name = "heezy-vpn-connection"
   })
@@ -91,7 +91,7 @@ resource "aws_vpn_connection_route" "on_premises" {
 # Cloud WAN Core Network
 resource "aws_networkmanager_core_network" "main" {
   global_network_id = aws_networkmanager_global_network.main.id
-  policy_document   = jsonencode({
+  policy_document = jsonencode({
     version = "2021.12"
     core-network-configuration = {
       asn-ranges = ["64512-65534"]
@@ -110,7 +110,7 @@ resource "aws_networkmanager_core_network" "main" {
       }
     ]
   })
-  
+
   tags = merge(local.common_tags, {
     Name = "heezy-core-network"
   })
@@ -119,7 +119,7 @@ resource "aws_networkmanager_core_network" "main" {
 # Global Network
 resource "aws_networkmanager_global_network" "main" {
   description = "Heezy Global Network"
-  
+
   tags = merge(local.common_tags, {
     Name = "heezy-global-network"
   })
@@ -130,7 +130,7 @@ resource "aws_networkmanager_vpc_attachment" "main" {
   core_network_id = aws_networkmanager_core_network.main.id
   vpc_arn         = aws_vpc.main.arn
   subnet_arns     = [aws_subnet.private.arn]
-  
+
   tags = merge(local.common_tags, {
     Name = "heezy-vpc-attachment"
   })
