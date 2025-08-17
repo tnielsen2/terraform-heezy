@@ -15,13 +15,65 @@ provider "fortios" {
   insecure = "true"
 }
 
+# AWS Zone for tunnel interface
+resource "fortios_system_zone" "aws" {
+  name      = "AWS"
+  intrazone = "deny"
+  interface {
+    interface_name = fortios_vpnipsec_phase1interface.aws_tunnel.name
+  }
+}
+
+# Update existing zones to default deny
+resource "fortios_system_zone" "servers_update" {
+  name      = "SERVERS"
+  intrazone = "deny"
+  interface {
+    interface_name = "internal7"
+  }
+}
+
+resource "fortios_system_zone" "users_update" {
+  name      = "USERS"
+  intrazone = "deny"
+  interface {
+    interface_name = "FGT-Switch"
+  }
+}
+
+# Address objects for networks
+resource "fortios_firewall_address" "servers" {
+  name   = "SERVERS_NET"
+  subnet = "192.168.1.0 255.255.255.0"
+}
+
+resource "fortios_firewall_address" "users" {
+  name   = "USERS_NET"
+  subnet = "192.168.2.0 255.255.255.0"
+}
+
+resource "fortios_firewall_address" "k8s" {
+  name   = "K8S_NET"
+  subnet = "192.168.10.0 255.255.255.0"
+}
+
+resource "fortios_firewall_address" "onprem_summary" {
+  name   = "ONPREM_SUMMARY"
+  subnet = "192.168.0.0 255.255.0.0"
+}
+
+resource "fortios_firewall_address" "aws_vpc" {
+  name   = "AWS_VPC"
+  subnet = "10.0.0.0 255.255.0.0"
+}
+
 # IPSec Phase 1 Interface
 resource "fortios_vpnipsec_phase1interface" "aws_tunnel" {
   name              = "aws-tunnel"
   interface         = "wan1"
   peertype          = "any"
-  proposal          = "aes128-sha256 aes256-sha256"
-  dhgrp             = "14 5"
+  proposal          = "aes256-sha256"
+  dhgrp             = "14"
   remote_gw         = aws_vpn_connection.main.tunnel1_address
   psksecret         = aws_vpn_connection.main.tunnel1_preshared_key
   dpd_retrycount    = 3
@@ -32,32 +84,97 @@ resource "fortios_vpnipsec_phase1interface" "aws_tunnel" {
 resource "fortios_vpnipsec_phase2interface" "aws_tunnel" {
   name       = "aws-tunnel"
   phase1name = fortios_vpnipsec_phase1interface.aws_tunnel.name
-  proposal   = "aes128-sha1 aes256-sha1"
-  dhgrp      = "5 14"
-  src_subnet = "192.168.1.0/24"
-  dst_subnet = "10.0.0.0/16"
+  proposal   = "aes256-sha256"
+  dhgrp      = "14"
+  src_subnet = "0.0.0.0/0"
+  dst_subnet = "0.0.0.0/0"
 }
 
-# Static route for AWS traffic
-resource "fortios_router_static" "aws_route" {
-  seq_num  = 1
-  dst      = "10.0.0.0/16"
-  device   = fortios_vpnipsec_phase1interface.aws_tunnel.name
-  priority = 10
+# BGP Configuration
+resource "fortios_router_bgp" "main" {
+  as_number = 65002
+  router_id = "192.168.1.1"
+
+  neighbor {
+    ip               = aws_vpn_connection.main.tunnel1_cgw_inside_address
+    remote_as        = 64512
+    soft_reconfiguration = "enable"
+  }
+
+  network {
+    prefix = "192.168.0.0/16"
+  }
 }
 
-# Firewall policy for VPN traffic
-resource "fortios_firewall_policy" "vpn_policy" {
+# Segmented firewall policies
+resource "fortios_firewall_policy" "servers_to_aws" {
   policyid = 10
-  name     = "aws-vpn-policy"
+  name     = "servers-to-aws"
   action   = "accept"
 
   srcintf {
-    name = "internal"
+    name = "SERVERS"
   }
 
   dstintf {
-    name = fortios_vpnipsec_phase1interface.aws_tunnel.name
+    name = "AWS"
+  }
+
+  srcaddr {
+    name = fortios_firewall_address.servers.name
+  }
+
+  dstaddr {
+    name = fortios_firewall_address.aws_vpc.name
+  }
+
+  service {
+    name = "ALL"
+  }
+
+  schedule = "always"
+}
+
+resource "fortios_firewall_policy" "aws_to_servers" {
+  policyid = 11
+  name     = "aws-to-servers"
+  action   = "accept"
+
+  srcintf {
+    name = "AWS"
+  }
+
+  dstintf {
+    name = "SERVERS"
+  }
+
+  srcaddr {
+    name = fortios_firewall_address.aws_vpc.name
+  }
+
+  dstaddr {
+    name = fortios_firewall_address.servers.name
+  }
+
+  service {
+    name = "ALL"
+  }
+
+  schedule = "always"
+}
+
+# Deny inter-zone traffic by default (explicit)
+resource "fortios_firewall_policy" "deny_users_to_servers" {
+  policyid = 20
+  name     = "deny-users-to-servers"
+  action   = "deny"
+
+  srcintf {
+    name = "USERS"
+  }
+
+  dstintf {
+    name = "SERVERS"
   }
 
   srcaddr {
@@ -73,4 +190,5 @@ resource "fortios_firewall_policy" "vpn_policy" {
   }
 
   schedule = "always"
+  logtraffic = "all"
 }

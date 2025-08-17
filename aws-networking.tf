@@ -52,7 +52,7 @@ resource "aws_internet_gateway" "main" {
 
 # Customer Gateway (FortiGate)
 resource "aws_customer_gateway" "fortigate" {
-  bgp_asn    = 65000
+  bgp_asn    = 65002
   ip_address = "68.55.23.111"
   type       = "ipsec.1"
 
@@ -70,22 +70,16 @@ resource "aws_vpn_gateway" "main" {
   })
 }
 
-# VPN Connection
+# VPN Connection with BGP
 resource "aws_vpn_connection" "main" {
   vpn_gateway_id      = aws_vpn_gateway.main.id
   customer_gateway_id = aws_customer_gateway.fortigate.id
   type                = "ipsec.1"
-  static_routes_only  = true
+  static_routes_only  = false
 
   tags = merge(local.common_tags, {
     Name = "heezy-vpn-connection"
   })
-}
-
-# VPN Connection Route
-resource "aws_vpn_connection_route" "on_premises" {
-  vpn_connection_id      = aws_vpn_connection.main.id
-  destination_cidr_block = "192.168.1.0/24"
 }
 
 # Cloud WAN Core Network
