@@ -1,14 +1,13 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
 
+# Proxmox credentials from AWS Secrets Manager - always fetch for auth
 data "aws_secretsmanager_secret_version" "proxmox" {
-  count = local.enable_aws_resources ? 1 : 0
-
   secret_id = "production/heezy/terraform/proxmox/secret"
 }
 
 locals {
-  proxmox_creds = local.enable_aws_resources ? jsondecode(data.aws_secretsmanager_secret_version.proxmox[0].secret_string) : {}
+  proxmox_creds = jsondecode(data.aws_secretsmanager_secret_version.proxmox.secret_string)
 }
 
 provider "aws" {
@@ -17,8 +16,8 @@ provider "aws" {
 
 provider "proxmox" {
   pm_api_url      = "https://192.168.1.144:8006/api2/json"
-  pm_user         = try(local.proxmox_creds.username, "dummy")
-  pm_password     = try(local.proxmox_creds.password, "dummy")
+  pm_user         = local.proxmox_creds.username
+  pm_password     = local.proxmox_creds.password
   pm_tls_insecure = true
 }
 
