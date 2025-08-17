@@ -17,35 +17,76 @@ permissions:
   pull-requests: write
 
 jobs:
-  terraform:
-    runs-on: self-hosted
+  get-runner-credentials:
+    runs-on: ubuntu-latest
+    outputs:
+      runner-access-key: ${{ steps.get-creds.outputs.access-key }}
+      runner-secret-key: ${{ steps.get-creds.outputs.secret-key }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/GitHubActions-MultiRepo
           aws-region: us-east-2
 
-      - name: Assume Terraform role
+      - name: Get runner credentials from AWS Secrets
+        id: get-creds
         run: |
-          CREDS=$(aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/terraform-proxmox-state-backend --role-session-name terraform-session)
-          echo "AWS_ACCESS_KEY_ID=$(echo $CREDS | jq -r '.Credentials.AccessKeyId')" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=$(echo $CREDS | jq -r '.Credentials.SecretAccessKey')" >> $GITHUB_ENV
-          echo "AWS_SESSION_TOKEN=$(echo $CREDS | jq -r '.Credentials.SessionToken')" >> $GITHUB_ENV
+          CREDS=$(aws secretsmanager get-secret-value --secret-id /production/heezy/github_runner/aws_credentials --query SecretString --output text)
+          echo "access-key=$(echo $CREDS | jq -r '.AWS_ACCESS_KEY_ID')" >> $GITHUB_OUTPUT
+          echo "secret-key=$(echo $CREDS | jq -r '.AWS_SECRET_ACCESS_KEY')" >> $GITHUB_OUTPUT
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+  terraform:
+    needs: get-runner-credentials
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Plan
-        id: plan
+      - name: Install required tools
         run: |
+          # Install AWS CLI if not present
+          if ! command -v aws &> /dev/null; then
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+            rm -rf awscliv2.zip aws/
+          fi
+          
+          # Install jq if not present
+          if ! command -v jq &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y jq
+          fi
+          
+          # Install Terraform if not present
+          if ! command -v terraform &> /dev/null; then
+            wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+            echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+            sudo apt update && sudo apt install -y terraform
+          fi
+
+      - name: Terraform Init and Plan
+        run: |
+          # Assume Terraform role using passed credentials
+          TERRAFORM_CREDS=$(AWS_ACCESS_KEY_ID=${{ needs.get-runner-credentials.outputs.runner-access-key }} \
+          AWS_SECRET_ACCESS_KEY=${{ needs.get-runner-credentials.outputs.runner-secret-key }} \
+          AWS_DEFAULT_REGION=us-east-2 \
+          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/terraform-proxmox-state-backend --role-session-name terraform-session)
+          
+          # Run Terraform with assumed role
+          AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId') \
+          AWS_SECRET_ACCESS_KEY=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SecretAccessKey') \
+          AWS_SESSION_TOKEN=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SessionToken') \
+          terraform init
+          
+          AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId') \
+          AWS_SECRET_ACCESS_KEY=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SecretAccessKey') \
+          AWS_SESSION_TOKEN=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SessionToken') \
           terraform plan -no-color -out=tfplan
+          
+          AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId') \
+          AWS_SECRET_ACCESS_KEY=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SecretAccessKey') \
+          AWS_SESSION_TOKEN=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SessionToken') \
           terraform show -no-color tfplan > plan.txt
 
       - name: Comment Plan on PR
@@ -69,7 +110,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/main'
-    needs: terraform
+    needs: [get-runner-credentials, terraform]
     runs-on: self-hosted
     environment: production
     concurrency:
@@ -79,24 +120,43 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/GitHubActions-MultiRepo
-          aws-region: us-east-2
-
-      - name: Assume Terraform role
+      - name: Install required tools
         run: |
-          CREDS=$(aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/terraform-proxmox-state-backend --role-session-name terraform-session)
-          echo "AWS_ACCESS_KEY_ID=$(echo $CREDS | jq -r '.Credentials.AccessKeyId')" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=$(echo $CREDS | jq -r '.Credentials.SecretAccessKey')" >> $GITHUB_ENV
-          echo "AWS_SESSION_TOKEN=$(echo $CREDS | jq -r '.Credentials.SessionToken')" >> $GITHUB_ENV
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Terraform Init
-        run: terraform init
+          # Install AWS CLI if not present
+          if ! command -v aws &> /dev/null; then
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+            rm -rf awscliv2.zip aws/
+          fi
+          
+          # Install jq if not present
+          if ! command -v jq &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y jq
+          fi
+          
+          # Install Terraform if not present
+          if ! command -v terraform &> /dev/null; then
+            wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+            echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+            sudo apt update && sudo apt install -y terraform
+          fi
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: |
+          # Assume Terraform role using passed credentials
+          TERRAFORM_CREDS=$(AWS_ACCESS_KEY_ID=${{ needs.get-runner-credentials.outputs.runner-access-key }} \
+          AWS_SECRET_ACCESS_KEY=${{ needs.get-runner-credentials.outputs.runner-secret-key }} \
+          AWS_DEFAULT_REGION=us-east-2 \
+          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/terraform-proxmox-state-backend --role-session-name terraform-session)
+          
+          # Run Terraform with assumed role
+          AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId') \
+          AWS_SECRET_ACCESS_KEY=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SecretAccessKey') \
+          AWS_SESSION_TOKEN=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SessionToken') \
+          terraform init
+          
+          AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId') \
+          AWS_SECRET_ACCESS_KEY=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SecretAccessKey') \
+          AWS_SESSION_TOKEN=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SessionToken') \
+          terraform apply -auto-approve
