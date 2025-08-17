@@ -8,9 +8,9 @@ variable "target_node" {
   description = "Proxmox node to deploy VM on"
 }
 
-variable "template_name" {
+variable "proxmox_vm_id" {
   type        = string
-  description = "Template to clone from"
+  description = "Template VM ID to clone from"
 }
 
 variable "os_type" {
@@ -35,13 +35,7 @@ variable "vm_memory" {
 }
 
 variable "vm_disk_size" {
-  type        = string
-  description = "Disk size"
-  default     = "100G"
-}
-
-variable "scsihw" {
-  type        = string
-  description = "SCSI controller type"
-  default     = "virtio-scsi-pci"
+  type        = number
+  description = "Disk size in GB"
+  default     = 100
 }

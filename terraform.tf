@@ -1,4 +1,3 @@
-
 terraform {
   backend "s3" {
     bucket       = "terraform-heezy-state"
@@ -14,7 +13,8 @@ terraform {
       version = "~> 5.0"
     }
     proxmox = {
-      source = "telmate/proxmox"
+      source  = "bpg/proxmox"
+      version = "0.81.0"
     }
     fortios = {
       source  = "fortinetdev/fortios"

@@ -15,9 +15,8 @@ provider "aws" {
 }
 
 provider "proxmox" {
-  pm_api_url      = "https://192.168.1.144:8006/api2/json"
-  pm_user         = local.proxmox_creds.username
-  pm_password     = local.proxmox_creds.password
-  pm_tls_insecure = true
+  endpoint = "https://192.168.1.144:8006/"
+  username = local.proxmox_creds.username
+  password = local.proxmox_creds.password
+  insecure = true
 }
-

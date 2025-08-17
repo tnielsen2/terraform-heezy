@@ -1,42 +1,36 @@
-resource "proxmox_vm_qemu" "vm" {
-  name        = var.vm_name
-  target_node = var.target_node
-  clone       = var.template_name
+resource "proxmox_virtual_environment_vm" "vm" {
+  name      = var.vm_name
+  node_name = var.target_node
 
-  cores   = var.vm_cores
-  sockets = 1
-  memory  = var.vm_memory
-  scsihw  = var.scsihw
-
-  clone_wait = 7200 # 2 hour timeout for clone operations
-  agent      = 1    # Enable QEMU guest agent for better monitoring
-
-  disk {
-    slot    = 0
-    size    = var.vm_disk_size
-    type    = "scsi"
-    storage = "local-lvm"
+  clone {
+    vm_id = var.proxmox_vm_id
   }
 
-  network {
-    model  = "virtio"
+  agent {
+    enabled = true
+  }
+
+  cpu {
+    cores   = var.vm_cores
+    sockets = 1
+  }
+
+  memory {
+    dedicated = var.vm_memory
+  }
+
+  disk {
+    datastore_id = "local-lvm"
+    interface    = "scsi0"
+    size         = var.vm_disk_size
+  }
+
+  network_device {
     bridge = "vmbr0"
   }
 
-  os_type = var.os_type == "windows" ? "win10" : "l26"
-
-  lifecycle {
-    ignore_changes = [network]
-  }
-
-  timeouts {
-    create = "120m" # Increased to 2 hours
-    update = "120m"
-    delete = "10m"
-  }
-
   provisioner "local-exec" {
-    command     = "ansible-playbook -i '${self.default_ipv4_address},' playbook.yml"
+    command     = "ansible-playbook -i '${self.ipv4_addresses[1][0]},' playbook.yml"
     working_dir = "../../ansible-runner-bootstrap"
   }
 }

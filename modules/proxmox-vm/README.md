@@ -3,13 +3,15 @@
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | ~> 0.66 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | 2.9.14 |
+| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | 0.81.0 |
 
 ## Modules
 
@@ -19,18 +21,17 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [proxmox_vm_qemu.vm](https://registry.terraform.io/providers/telmate/proxmox/latest/docs/resources/vm_qemu) | resource |
+| [proxmox_virtual_environment_vm.vm](https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_vm) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_os_type"></a> [os\_type](#input\_os\_type) | OS type: windows or linux | `string` | n/a | yes |
-| <a name="input_scsihw"></a> [scsihw](#input\_scsihw) | SCSI controller type | `string` | `"virtio-scsi-pci"` | no |
+| <a name="input_proxmox_vm_id"></a> [proxmox\_vm\_id](#input\_proxmox\_vm\_id) | Template VM ID to clone from | `string` | n/a | yes |
 | <a name="input_target_node"></a> [target\_node](#input\_target\_node) | Proxmox node to deploy VM on | `string` | n/a | yes |
-| <a name="input_template_name"></a> [template\_name](#input\_template\_name) | Template to clone from | `string` | n/a | yes |
 | <a name="input_vm_cores"></a> [vm\_cores](#input\_vm\_cores) | Number of CPU cores | `number` | `2` | no |
-| <a name="input_vm_disk_size"></a> [vm\_disk\_size](#input\_vm\_disk\_size) | Disk size | `string` | `"100G"` | no |
+| <a name="input_vm_disk_size"></a> [vm\_disk\_size](#input\_vm\_disk\_size) | Disk size in GB | `number` | `100` | no |
 | <a name="input_vm_memory"></a> [vm\_memory](#input\_vm\_memory) | Memory in MB | `number` | `4096` | no |
 | <a name="input_vm_name"></a> [vm\_name](#input\_vm\_name) | Name of the VM | `string` | n/a | yes |
 
