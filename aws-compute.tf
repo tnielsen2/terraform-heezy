@@ -2,8 +2,10 @@
 
 # Security Group for EC2 instances
 resource "aws_security_group" "ec2" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name_prefix = "heezy-ec2-"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.main[0].id
 
   ingress {
     from_port   = 22
@@ -40,6 +42,8 @@ resource "aws_security_group" "ec2" {
 
 # Key Pair for EC2 instances
 resource "aws_key_pair" "main" {
+  count = local.enable_aws_resources ? 1 : 0
+
   key_name   = "heezy-key"
   public_key = "ssh-rsa AAAAB3NzaC1yc2E..." # Replace with your public key
 
@@ -48,11 +52,13 @@ resource "aws_key_pair" "main" {
 
 # EC2 Instance in Public Subnet
 resource "aws_instance" "web" {
+  count = local.enable_aws_resources ? 1 : 0
+
   ami                    = "ami-0c02fb55956c7d316" # Amazon Linux 2
   instance_type          = "t3.micro"
-  key_name               = aws_key_pair.main.key_name
-  vpc_security_group_ids = [aws_security_group.ec2.id]
-  subnet_id              = aws_subnet.public.id
+  key_name               = aws_key_pair.main[0].key_name
+  vpc_security_group_ids = [aws_security_group.ec2[0].id]
+  subnet_id              = aws_subnet.public[0].id
 
   user_data = <<-EOF
     #!/bin/bash
@@ -70,11 +76,13 @@ resource "aws_instance" "web" {
 
 # EC2 Instance in Private Subnet
 resource "aws_instance" "app" {
+  count = local.enable_aws_resources ? 1 : 0
+
   ami                    = "ami-0c02fb55956c7d316" # Amazon Linux 2
   instance_type          = "t3.micro"
-  key_name               = aws_key_pair.main.key_name
-  vpc_security_group_ids = [aws_security_group.ec2.id]
-  subnet_id              = aws_subnet.private.id
+  key_name               = aws_key_pair.main[0].key_name
+  vpc_security_group_ids = [aws_security_group.ec2[0].id]
+  subnet_id              = aws_subnet.private[0].id
 
   user_data = <<-EOF
     #!/bin/bash

@@ -1,31 +1,37 @@
 # FortiGate and IPSec tunnel configuration
 
 data "aws_secretsmanager_secret_version" "fortigate" {
+  count = local.enable_aws_resources ? 1 : 0
+
   secret_id = "production/heezy/terraform/fortigate/secret"
 }
 
 locals {
-  fortigate_creds = jsondecode(data.aws_secretsmanager_secret_version.fortigate.secret_string)
+  fortigate_creds = local.enable_aws_resources ? jsondecode(data.aws_secretsmanager_secret_version.fortigate[0].secret_string) : {}
 }
 
 provider "fortios" {
   hostname = "192.168.1.1:8443"
-  username = local.fortigate_creds.username
-  password = local.fortigate_creds.password
+  username = try(local.fortigate_creds.username, "dummy")
+  password = try(local.fortigate_creds.password, "dummy")
   insecure = "true"
 }
 
 # AWS Zone for tunnel interface
 resource "fortios_system_zone" "aws" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name      = "AWS"
   intrazone = "deny"
   interface {
-    interface_name = fortios_vpnipsec_phase1interface.aws_tunnel.name
+    interface_name = fortios_vpnipsec_phase1interface.aws_tunnel[0].name
   }
 }
 
 # Update existing zones to default deny
 resource "fortios_system_zone" "servers_update" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name      = "SERVERS"
   intrazone = "deny"
   interface {
@@ -34,6 +40,8 @@ resource "fortios_system_zone" "servers_update" {
 }
 
 resource "fortios_system_zone" "users_update" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name      = "USERS"
   intrazone = "deny"
   interface {
@@ -43,47 +51,61 @@ resource "fortios_system_zone" "users_update" {
 
 # Address objects for networks
 resource "fortios_firewall_address" "servers" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name   = "SERVERS_NET"
   subnet = "192.168.1.0 255.255.255.0"
 }
 
 resource "fortios_firewall_address" "users" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name   = "USERS_NET"
   subnet = "192.168.2.0 255.255.255.0"
 }
 
 resource "fortios_firewall_address" "k8s" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name   = "K8S_NET"
   subnet = "192.168.10.0 255.255.255.0"
 }
 
 resource "fortios_firewall_address" "onprem_summary" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name   = "ONPREM_SUMMARY"
   subnet = "192.168.0.0 255.255.0.0"
 }
 
 resource "fortios_firewall_address" "aws_vpc" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name   = "AWS_VPC"
   subnet = "10.0.0.0 255.255.0.0"
 }
 
 # IPSec Phase 1 Interface
 resource "fortios_vpnipsec_phase1interface" "aws_tunnel" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name              = "aws-tunnel"
   interface         = "wan1"
   peertype          = "any"
   proposal          = "aes256-sha256"
   dhgrp             = "14"
-  remote_gw         = aws_vpn_connection.main.tunnel1_address
-  psksecret         = aws_vpn_connection.main.tunnel1_preshared_key
+  remote_gw         = aws_vpn_connection.main[0].tunnel1_address
+  psksecret         = aws_vpn_connection.main[0].tunnel1_preshared_key
   dpd_retrycount    = 3
   dpd_retryinterval = 60
 }
 
 # IPSec Phase 2 Interface
 resource "fortios_vpnipsec_phase2interface" "aws_tunnel" {
+  count = local.enable_aws_resources ? 1 : 0
+
   name       = "aws-tunnel"
-  phase1name = fortios_vpnipsec_phase1interface.aws_tunnel.name
+  phase1name = fortios_vpnipsec_phase1interface.aws_tunnel[0].name
   proposal   = "aes256-sha256"
   dhgrp      = "14"
   src_subnet = "0.0.0.0/0"
@@ -92,22 +114,30 @@ resource "fortios_vpnipsec_phase2interface" "aws_tunnel" {
 
 # BGP Configuration
 resource "fortios_router_bgp" "main" {
+  count = local.enable_aws_resources ? 1 : 0
+
   as        = 65002
   router_id = "192.168.1.1"
 }
 
 resource "fortios_routerbgp_neighbor" "aws" {
-  ip                   = aws_vpn_connection.main.tunnel1_cgw_inside_address
+  count = local.enable_aws_resources ? 1 : 0
+
+  ip                   = aws_vpn_connection.main[0].tunnel1_cgw_inside_address
   remote_as            = 64512
   soft_reconfiguration = "enable"
 }
 
 resource "fortios_routerbgp_network" "onprem" {
+  count = local.enable_aws_resources ? 1 : 0
+
   prefix = "192.168.0.0/16"
 }
 
 # Segmented firewall policies
 resource "fortios_firewall_policy" "servers_to_aws" {
+  count = local.enable_aws_resources ? 1 : 0
+
   policyid = 10
   name     = "servers-to-aws"
   action   = "accept"
@@ -121,11 +151,11 @@ resource "fortios_firewall_policy" "servers_to_aws" {
   }
 
   srcaddr {
-    name = fortios_firewall_address.servers.name
+    name = fortios_firewall_address.servers[0].name
   }
 
   dstaddr {
-    name = fortios_firewall_address.aws_vpc.name
+    name = fortios_firewall_address.aws_vpc[0].name
   }
 
   service {
@@ -136,6 +166,8 @@ resource "fortios_firewall_policy" "servers_to_aws" {
 }
 
 resource "fortios_firewall_policy" "aws_to_servers" {
+  count = local.enable_aws_resources ? 1 : 0
+
   policyid = 11
   name     = "aws-to-servers"
   action   = "accept"
@@ -149,11 +181,11 @@ resource "fortios_firewall_policy" "aws_to_servers" {
   }
 
   srcaddr {
-    name = fortios_firewall_address.aws_vpc.name
+    name = fortios_firewall_address.aws_vpc[0].name
   }
 
   dstaddr {
-    name = fortios_firewall_address.servers.name
+    name = fortios_firewall_address.servers[0].name
   }
 
   service {
@@ -165,6 +197,8 @@ resource "fortios_firewall_policy" "aws_to_servers" {
 
 # Deny inter-zone traffic by default (explicit)
 resource "fortios_firewall_policy" "deny_users_to_servers" {
+  count = local.enable_aws_resources ? 1 : 0
+
   policyid = 20
   name     = "deny-users-to-servers"
   action   = "deny"
