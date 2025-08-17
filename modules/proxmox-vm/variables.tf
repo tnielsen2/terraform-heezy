@@ -39,3 +39,9 @@ variable "vm_disk_size" {
   description = "Disk size"
   default     = "100G"
 }
+
+variable "scsihw" {
+  type        = string
+  description = "SCSI controller type"
+  default     = "virtio-scsi-pci"
+}

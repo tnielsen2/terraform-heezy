@@ -2,7 +2,7 @@ name: Terraform CI/CD
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   pull_request:
     branches: [main]
   merge_group:
@@ -49,7 +49,7 @@ jobs:
           TERRAFORM_CREDS=$(AWS_ACCESS_KEY_ID=${{ needs.get-runner-credentials.outputs.runner-access-key }} \
           AWS_SECRET_ACCESS_KEY=${{ needs.get-runner-credentials.outputs.runner-secret-key }} \
           AWS_DEFAULT_REGION=us-east-2 \
-          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/terraform-proxmox-state-backend --role-session-name terraform-session)
+          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/productionATerraformStateBackend --role-session-name terraform-session)
           
           # Run Terraform with assumed role
           AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId') \
@@ -104,7 +104,7 @@ jobs:
           TERRAFORM_CREDS=$(AWS_ACCESS_KEY_ID=${{ needs.get-runner-credentials.outputs.runner-access-key }} \
           AWS_SECRET_ACCESS_KEY=${{ needs.get-runner-credentials.outputs.runner-secret-key }} \
           AWS_DEFAULT_REGION=us-east-2 \
-          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/terraform-proxmox-state-backend --role-session-name terraform-session)
+          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/productionATerraformStateBackend --role-session-name terraform-session)
           
           # Run Terraform with assumed role
           AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId') \
