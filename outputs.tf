@@ -24,6 +24,11 @@ output "linux_vms" {
       id   = module.testvm2.vm_id
       name = module.testvm2.vm_name
       ip   = module.testvm2.vm_ip
+    },
+    vm3 = {
+      id   = module.minecraftvm2.vm_id
+      name = module.minecraftvm2.vm_name
+      ip   = module.minecraftvm2.vm_ip
     }
   }
 }

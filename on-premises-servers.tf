@@ -28,3 +28,13 @@ module "testvm2" {
   vm_disk_size  = 150
   os_type       = "linux"
 }
+
+module "minecraftvm2" {
+  source = "./modules/proxmox-vm"
+
+  vm_name       = "minecraftvm2"
+  target_node   = "proxmox"
+  proxmox_vm_id = 105 # ubuntu-2024-vm-template-8-2025
+  vm_disk_size  = 150
+  os_type       = "linux"
+}
