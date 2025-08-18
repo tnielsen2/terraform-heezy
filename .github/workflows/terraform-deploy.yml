@@ -32,7 +32,7 @@ jobs:
       - name: Get runner credentials from AWS Secrets
         id: get-creds
         run: |
-          CREDS=$(aws secretsmanager get-secret-value --secret-id /production/heezy/github_runner/aws_credentials --query SecretString --output text)
+          CREDS=$(aws secretsmanager get-secret-value --secret-id production/heezy/github_runner/aws_credentials --query SecretString --output text)
           echo "access-key=$(echo $CREDS | jq -r '.AWS_ACCESS_KEY_ID')" >> $GITHUB_OUTPUT
           echo "secret-key=$(echo $CREDS | jq -r '.AWS_SECRET_ACCESS_KEY')" >> $GITHUB_OUTPUT
 
