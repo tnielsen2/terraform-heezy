@@ -11,7 +11,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
   }
 
   stop_on_destroy = true
-  protection      = true # Prevent accidental deletion
+  protection      = false # Prevent accidental deletion
 
   timeout_clone       = 7200 # 2 hours
   timeout_create      = 7200 # 2 hours
