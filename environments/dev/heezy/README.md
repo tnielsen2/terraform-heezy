@@ -17,9 +17,7 @@
 
 ## Modules
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_dev_runner"></a> [dev\_runner](#module\_dev\_runner) | ../../../shared/modules/proxmox-vm | n/a |
+No modules.
 
 ## Resources
 
@@ -36,7 +34,5 @@
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_linux_vms"></a> [linux\_vms](#output\_linux\_vms) | Linux VM information |
+No outputs.
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
