@@ -27,9 +27,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_ansible_custom_role"></a> [ansible\_custom\_role](#input\_ansible\_custom\_role) | Custom Ansible role | `string` | `""` | no |
-| <a name="input_ansible_playbook"></a> [ansible\_playbook](#input\_ansible\_playbook) | Ansible playbook to run | `string` | `"baseline"` | no |
-| <a name="input_ansible_repo"></a> [ansible\_repo](#input\_ansible\_repo) | GitHub repository for Ansible automation | `string` | `"tnielsen2/ansible-heezy"` | no |
+| <a name="input_ansible_playbooks"></a> [ansible\_playbooks](#input\_ansible\_playbooks) | Comma-separated list of playbooks to run | `string` | `"baseline"` | no |
+| <a name="input_ansible_repo"></a> [ansible\_repo](#input\_ansible\_repo) | GitHub repository for Ansible automation | `string` | `"ansible-heezy"` | no |
 | <a name="input_os_type"></a> [os\_type](#input\_os\_type) | OS type: windows or linux | `string` | n/a | yes |
 | <a name="input_proxmox_vm_id"></a> [proxmox\_vm\_id](#input\_proxmox\_vm\_id) | Template VM ID to clone from | `string` | n/a | yes |
 | <a name="input_target_node"></a> [target\_node](#input\_target\_node) | Proxmox node to deploy VM on | `string` | n/a | yes |

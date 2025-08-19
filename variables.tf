@@ -22,12 +22,6 @@ variable "ansible_playbook" {
   default     = "vm-bootstrap"
 }
 
-variable "ansible_custom_role" {
-  type        = string
-  description = "Custom Ansible role to apply (overrides default)"
-  default     = ""
-}
-
 variable "ansible_linux_role" {
   type        = string
   description = "Specific role for Linux VM (e.g., minecraft-server)"

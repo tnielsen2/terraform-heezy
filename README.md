@@ -66,7 +66,6 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_ansible_custom_role"></a> [ansible\_custom\_role](#input\_ansible\_custom\_role) | Custom Ansible role to apply (overrides default) | `string` | `""` | no |
 | <a name="input_ansible_linux_role"></a> [ansible\_linux\_role](#input\_ansible\_linux\_role) | Specific role for Linux VM (e.g., minecraft-server) | `string` | `""` | no |
 | <a name="input_ansible_playbook"></a> [ansible\_playbook](#input\_ansible\_playbook) | Default Ansible playbook to run | `string` | `"vm-bootstrap"` | no |
 | <a name="input_ansible_repo"></a> [ansible\_repo](#input\_ansible\_repo) | GitHub repository for Ansible automation | `string` | `"your-org/ansible-automation"` | no |

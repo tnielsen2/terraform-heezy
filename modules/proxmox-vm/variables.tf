@@ -43,17 +43,11 @@ variable "vm_disk_size" {
 variable "ansible_repo" {
   type        = string
   description = "GitHub repository for Ansible automation"
-  default     = "tnielsen2/ansible-heezy"
+  default     = "ansible-heezy"
 }
 
-variable "ansible_playbook" {
+variable "ansible_playbooks" {
   type        = string
-  description = "Ansible playbook to run"
+  description = "Comma-separated list of playbooks to run"
   default     = "baseline"
-}
-
-variable "ansible_custom_role" {
-  type        = string
-  description = "Custom Ansible role"
-  default     = ""
 }
