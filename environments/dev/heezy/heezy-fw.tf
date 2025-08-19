@@ -4,7 +4,7 @@
 
 # FortiGate credentials from AWS Secrets Manager - always fetch for auth
 data "aws_secretsmanager_secret_version" "fortigate" {
-  secret_id = "dev/heezy/terraform/fortigate/secret"
+  secret_id = "production/heezy/terraform/fortigate/secret"
 }
 
 locals {

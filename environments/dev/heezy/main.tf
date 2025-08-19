@@ -3,7 +3,7 @@
 
 # Proxmox credentials from AWS Secrets Manager - dev environment
 data "aws_secretsmanager_secret_version" "proxmox" {
-  secret_id = "dev/heezy/terraform/proxmox/secret"
+  secret_id = "production/heezy/terraform/proxmox/secret"
 }
 
 locals {
