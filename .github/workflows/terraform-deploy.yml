@@ -114,3 +114,12 @@ jobs:
           AWS_SECRET_ACCESS_KEY=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SecretAccessKey') \
           AWS_SESSION_TOKEN=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SessionToken') \
           terraform apply -auto-approve
+
+  notify:
+    if: always()
+    needs: [terraform-apply]
+    uses: ./.github/workflows/_discord-notify.yml
+    with:
+      status: ${{ (needs.terraform-apply.result == 'success' || needs.terraform-apply.result == 'skipped') && 'success' || 'failure' }}
+      workflow-name: 'Terraform Deploy'
+    secrets: inherit

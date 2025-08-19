@@ -30,6 +30,11 @@ output "linux_vms" {
       name = module.minecraftvm2.vm_name
       ip   = module.minecraftvm2.vm_ip
     }
+    vm4 = {
+      id   = module.github_runner.vm_id
+      name = module.github_runner.vm_name
+      ip   = module.github_runner.vm_ip
+    }
   }
 }
 

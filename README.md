@@ -20,6 +20,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_github_runner"></a> [github\_runner](#module\_github\_runner) | ./modules/proxmox-vm | n/a |
 | <a name="module_minecraftvm2"></a> [minecraftvm2](#module\_minecraftvm2) | ./modules/proxmox-vm | n/a |
 | <a name="module_testvm1"></a> [testvm1](#module\_testvm1) | ./modules/proxmox-vm | n/a |
 | <a name="module_testvm2"></a> [testvm2](#module\_testvm2) | ./modules/proxmox-vm | n/a |

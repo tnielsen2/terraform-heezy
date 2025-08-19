@@ -11,15 +11,14 @@ resource "proxmox_virtual_environment_vm" "vm" {
   }
 
   stop_on_destroy = true
-  protection      = false # Prevent accidental deletion
 
-  timeout_clone       = 7200 # 2 hours
-  timeout_create      = 7200 # 2 hours
-  timeout_migrate     = 3600 # 1 hour
-  timeout_reboot      = 3600 # 1 hour
-  timeout_shutdown_vm = 3600 # 1 hour
-  timeout_start_vm    = 3600 # 1 hour
-  timeout_stop_vm     = 600  # 10 minutes
+  timeout_clone       = 7200
+  timeout_create      = 7200
+  timeout_migrate     = 3600
+  timeout_reboot      = 3600
+  timeout_shutdown_vm = 3600
+  timeout_start_vm    = 3600
+  timeout_stop_vm     = 600
 
   cpu {
     cores   = var.vm_cores
@@ -38,5 +37,30 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   network_device {
     bridge = "vmbr0"
+  }
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      # Get GitHub token from AWS Secrets Manager
+      GH_TOKEN=$(aws secretsmanager get-secret-value \
+        --secret-id "all/heezy/github/runner/personal-access-token" \
+        --query SecretString --output text)
+      
+      # Trigger GitHub workflow
+      curl -X POST \
+        -H "Authorization: token $GH_TOKEN" \
+        -H "Accept: application/vnd.github.v3+json" \
+        https://api.github.com/repos/${var.ansible_repo}/actions/workflows/terraform-triggered.yml/dispatches \
+        -d '{
+          "ref": "main",
+          "inputs": {
+            "target_hosts": "${self.ipv4_addresses[1][0]}",
+            "playbook": "${var.ansible_playbook}",
+            "custom_role": "${var.ansible_custom_role}",
+            "environment": "prod",
+            "use_inventory": false
+          }
+        }'
+    EOT
   }
 }
