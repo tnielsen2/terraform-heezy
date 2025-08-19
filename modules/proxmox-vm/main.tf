@@ -57,9 +57,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
           "inputs": {
             "target_hosts": "${self.ipv4_addresses[1][0]}",
             "playbook": "${var.ansible_playbook}",
-            "custom_role": "${var.ansible_custom_role}",
-            "environment": "prod",
-            "use_inventory": false
+            "custom_role": "${var.ansible_custom_role}"
           }
         }'
     EOT
