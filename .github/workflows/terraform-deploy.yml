@@ -16,6 +16,31 @@ permissions:
   pull-requests: write
 
 jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      production-heezy: ${{ steps.changes.outputs.production-heezy }}
+      production-aws: ${{ steps.changes.outputs.production-aws }}
+      dev-heezy: ${{ steps.changes.outputs.dev-heezy }}
+      dev-aws: ${{ steps.changes.outputs.dev-aws }}
+      shared: ${{ steps.changes.outputs.shared }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            production-heezy:
+              - 'environments/production/heezy/**'
+            production-aws:
+              - 'environments/production/aws/**'
+            dev-heezy:
+              - 'environments/dev/heezy/**'
+            dev-aws:
+              - 'environments/dev/aws/**'
+            shared:
+              - 'shared/**'
+
   get-runner-credentials:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -37,14 +62,42 @@ jobs:
           echo "secret-key=$(echo $CREDS | jq -r '.AWS_SECRET_ACCESS_KEY')" >> $GITHUB_OUTPUT
 
   terraform-plan:
-    needs: get-runner-credentials
+    needs: [detect-changes, get-runner-credentials]
     runs-on: self-hosted
     timeout-minutes: 180
+    strategy:
+      matrix:
+        workspace:
+          - { env: "production", component: "heezy", path: "environments/production/heezy" }
+          - { env: "production", component: "aws", path: "environments/production/aws" }
+          - { env: "dev", component: "heezy", path: "environments/dev/heezy" }
+          - { env: "dev", component: "aws", path: "environments/dev/aws" }
     steps:
+      - name: Check if workspace should run
+        id: should-run
+        run: |
+          case "${{ matrix.workspace.env }}-${{ matrix.workspace.component }}" in
+            "production-heezy")
+              echo "run=${{ needs.detect-changes.outputs.production-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
+              ;;
+            "production-aws")
+              echo "run=${{ needs.detect-changes.outputs.production-aws == 'true' }}" >> $GITHUB_OUTPUT
+              ;;
+            "dev-heezy")
+              echo "run=${{ needs.detect-changes.outputs.dev-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
+              ;;
+            "dev-aws")
+              echo "run=${{ needs.detect-changes.outputs.dev-aws == 'true' }}" >> $GITHUB_OUTPUT
+              ;;
+          esac
+
       - name: Checkout
+        if: steps.should-run.outputs.run == 'true'
         uses: actions/checkout@v4
 
       - name: Terraform Init and Plan
+        if: steps.should-run.outputs.run == 'true'
+        working-directory: ${{ matrix.workspace.path }}
         run: |
           TERRAFORM_CREDS=$(AWS_ACCESS_KEY_ID=${{ needs.get-runner-credentials.outputs.runner-access-key }} \
           AWS_SECRET_ACCESS_KEY=${{ needs.get-runner-credentials.outputs.runner-secret-key }} \
@@ -67,13 +120,13 @@ jobs:
           terraform show -no-color tfplan > plan.txt
 
       - name: Comment Plan on PR
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && steps.should-run.outputs.run == 'true'
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const plan = fs.readFileSync('plan.txt', 'utf8');
-            const body = `## Terraform Plan
+            const plan = fs.readFileSync('${{ matrix.workspace.path }}/plan.txt', 'utf8');
+            const body = `## Terraform Plan - ${{ matrix.workspace.env }}/${{ matrix.workspace.component }}
             \`\`\`
             ${plan}
             \`\`\``;
@@ -87,18 +140,46 @@ jobs:
 
   terraform-apply:
     if: github.ref == 'refs/heads/main'
-    needs: [get-runner-credentials, terraform-plan]
+    needs: [detect-changes, get-runner-credentials, terraform-plan]
     runs-on: self-hosted
     timeout-minutes: 180
     environment: production
     concurrency:
-      group: terraform-deploy
+      group: terraform-deploy-${{ matrix.workspace.env }}-${{ matrix.workspace.component }}
       cancel-in-progress: false
+    strategy:
+      matrix:
+        workspace:
+          - { env: "production", component: "heezy", path: "environments/production/heezy" }
+          - { env: "production", component: "aws", path: "environments/production/aws" }
+          - { env: "dev", component: "heezy", path: "environments/dev/heezy" }
+          - { env: "dev", component: "aws", path: "environments/dev/aws" }
     steps:
+      - name: Check if workspace should run
+        id: should-run
+        run: |
+          case "${{ matrix.workspace.env }}-${{ matrix.workspace.component }}" in
+            "production-heezy")
+              echo "run=${{ needs.detect-changes.outputs.production-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
+              ;;
+            "production-aws")
+              echo "run=${{ needs.detect-changes.outputs.production-aws == 'true' }}" >> $GITHUB_OUTPUT
+              ;;
+            "dev-heezy")
+              echo "run=${{ needs.detect-changes.outputs.dev-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
+              ;;
+            "dev-aws")
+              echo "run=${{ needs.detect-changes.outputs.dev-aws == 'true' }}" >> $GITHUB_OUTPUT
+              ;;
+          esac
+
       - name: Checkout
+        if: steps.should-run.outputs.run == 'true'
         uses: actions/checkout@v4
 
       - name: Terraform Init and Apply
+        if: steps.should-run.outputs.run == 'true'
+        working-directory: ${{ matrix.workspace.path }}
         run: |
           TERRAFORM_CREDS=$(AWS_ACCESS_KEY_ID=${{ needs.get-runner-credentials.outputs.runner-access-key }} \
           AWS_SECRET_ACCESS_KEY=${{ needs.get-runner-credentials.outputs.runner-secret-key }} \

@@ -1,8 +1,0 @@
-all:
-  hosts:
-    runner:
-      ansible_host: management
-      ansible_user: trent
-      ansible_ssh_private_key_file: ~/.ssh/id_rsa
-      ansible_become: yes
-      ansible_become_method: sudo
