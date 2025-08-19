@@ -51,7 +51,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
       curl -X POST \
         -H "Authorization: Bearer $GH_TOKEN" \
         -H "Accept: application/vnd.github.v3+json" \
-        https://api.github.com/repos/${var.ansible_repo}/actions/workflows/terraform-triggered.yml/dispatches \
+        https://api.github.com/repos/tnielsen2/${var.ansible_repo}/actions/workflows/terraform-triggered.yml/dispatches \
         -d '{
           "ref": "main",
           "inputs": {

@@ -18,9 +18,7 @@
 
 ## Modules
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_github_runner"></a> [github\_runner](#module\_github\_runner) | ./modules/proxmox-vm | n/a |
+No modules.
 
 ## Resources
 
@@ -79,7 +77,6 @@
 | Name | Description |
 |------|-------------|
 | <a name="output_ec2_instances"></a> [ec2\_instances](#output\_ec2\_instances) | EC2 instance information |
-| <a name="output_linux_vms"></a> [linux\_vms](#output\_linux\_vms) | Linux VM information |
 | <a name="output_rds_endpoints"></a> [rds\_endpoints](#output\_rds\_endpoints) | RDS database endpoints |
 | <a name="output_vpc_info"></a> [vpc\_info](#output\_vpc\_info) | VPC information |
 | <a name="output_vpn_connection"></a> [vpn\_connection](#output\_vpn\_connection) | VPN connection details |
