@@ -12,31 +12,16 @@
 #   }
 # }
 
-# output "linux_vms" {
-#   description = "Linux VM information"
-#   value = {
-#     # vm1 = {
-#     #   id   = module.testvm1.vm_id
-#     #   name = module.testvm1.vm_name
-#     #   ip   = module.testvm1.vm_ip
-#     # },
-#     # vm2 = {
-#     #   id   = module.testvm2.vm_id
-#     #   name = module.testvm2.vm_name
-#     #   ip   = module.testvm2.vm_ip
-#     # },
-#     # vm3 = {
-#     #   id   = module.minecraftvm2.vm_id
-#     #   name = module.minecraftvm2.vm_name
-#     #   ip   = module.minecraftvm2.vm_ip
-#     # }
-#     # vm4 = {
-#     #   id   = module.github_runner.vm_id
-#     #   name = module.github_runner.vm_name
-#     #   ip   = module.github_runner.vm_ip
-#     # }
-#   }
-# }
+output "linux_vms" {
+  description = "Linux VM information"
+  value = {
+    vm1 = {
+      id   = module.github_runner.vm_id
+      name = module.github_runner.vm_name
+      ip   = module.github_runner.vm_ip
+    }
+  }
+}
 
 # AWS outputs
 output "vpc_info" {
