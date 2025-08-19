@@ -42,7 +42,7 @@ module "minecraftvm2" {
 module "github_runner" {
   source = "./modules/proxmox-vm"
 
-  vm_name             = "github_runner"
+  vm_name             = "github-runner"
   target_node         = "proxmox"
   proxmox_vm_id       = 105 # ubuntu-2024-vm-template-8-2025
   vm_disk_size        = 150
