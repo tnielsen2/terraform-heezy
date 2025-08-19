@@ -41,14 +41,15 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   provisioner "local-exec" {
     command = <<-EOT
-      # Get GitHub token from AWS Secrets Manager
+      # Get GitHub token from AWS Secrets Manager and parse JSON
       GH_TOKEN=$(aws secretsmanager get-secret-value \
+        --region us-east-2 \
         --secret-id "all/heezy/github/runner/personal-access-token" \
-        --query SecretString --output text)
+        --query SecretString --output text | jq -r '.token')
       
       # Trigger GitHub workflow
       curl -X POST \
-        -H "Authorization: token $GH_TOKEN" \
+        -H "Authorization: Bearer $GH_TOKEN" \
         -H "Accept: application/vnd.github.v3+json" \
         https://api.github.com/repos/${var.ansible_repo}/actions/workflows/terraform-triggered.yml/dispatches \
         -d '{
