@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: terraform-workflow-${{ github.ref }}
@@ -77,20 +78,24 @@ jobs:
       - name: Check if workspace should run
         id: should-run
         run: |
-          case "${{ matrix.workspace.env }}-${{ matrix.workspace.component }}" in
-            "production-heezy")
-              echo "run=${{ needs.detect-changes.outputs.production-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
-              ;;
-            "production-aws")
-              echo "run=${{ needs.detect-changes.outputs.production-aws == 'true' }}" >> $GITHUB_OUTPUT
-              ;;
-            "dev-heezy")
-              echo "run=${{ needs.detect-changes.outputs.dev-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
-              ;;
-            "dev-aws")
-              echo "run=${{ needs.detect-changes.outputs.dev-aws == 'true' }}" >> $GITHUB_OUTPUT
-              ;;
-          esac
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run=true" >> $GITHUB_OUTPUT
+          else
+            case "${{ matrix.workspace.env }}-${{ matrix.workspace.component }}" in
+              "production-heezy")
+                echo "run=${{ needs.detect-changes.outputs.production-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
+              "production-aws")
+                echo "run=${{ needs.detect-changes.outputs.production-aws == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
+              "dev-heezy")
+                echo "run=${{ needs.detect-changes.outputs.dev-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
+              "dev-aws")
+                echo "run=${{ needs.detect-changes.outputs.dev-aws == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
+            esac
+          fi
 
       - name: Checkout
         if: steps.should-run.outputs.run == 'true'
@@ -140,7 +145,7 @@ jobs:
             });
 
   terraform-apply:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
     needs: [detect-changes, get-runner-credentials, terraform-plan]
     runs-on: self-hosted
     timeout-minutes: 180
@@ -160,20 +165,24 @@ jobs:
       - name: Check if workspace should run
         id: should-run
         run: |
-          case "${{ matrix.workspace.env }}-${{ matrix.workspace.component }}" in
-            "production-heezy")
-              echo "run=${{ needs.detect-changes.outputs.production-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
-              ;;
-            "production-aws")
-              echo "run=${{ needs.detect-changes.outputs.production-aws == 'true' }}" >> $GITHUB_OUTPUT
-              ;;
-            "dev-heezy")
-              echo "run=${{ needs.detect-changes.outputs.dev-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
-              ;;
-            "dev-aws")
-              echo "run=${{ needs.detect-changes.outputs.dev-aws == 'true' }}" >> $GITHUB_OUTPUT
-              ;;
-          esac
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run=true" >> $GITHUB_OUTPUT
+          else
+            case "${{ matrix.workspace.env }}-${{ matrix.workspace.component }}" in
+              "production-heezy")
+                echo "run=${{ needs.detect-changes.outputs.production-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
+              "production-aws")
+                echo "run=${{ needs.detect-changes.outputs.production-aws == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
+              "dev-heezy")
+                echo "run=${{ needs.detect-changes.outputs.dev-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
+              "dev-aws")
+                echo "run=${{ needs.detect-changes.outputs.dev-aws == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
+            esac
+          fi
 
       - name: Checkout
         if: steps.should-run.outputs.run == 'true'
