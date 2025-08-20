@@ -1,34 +1,14 @@
 # Heezy Firewall Configuration
-# This file contains all FortiGate-related resources
-# Rename to heezy-fw.tf.disabled when AWS resources are disabled
 
 # FortiGate credentials from AWS Secrets Manager - always fetch for auth
-data "aws_secretsmanager_secret_version" "fortigate" {
-  secret_id = "production/heezy/terraform/fortigate/secret"
-}
 
-locals {
-  fortigate_creds = jsondecode(data.aws_secretsmanager_secret_version.fortigate.secret_string)
-}
-
-# FortiGate provider configuration
-provider "fortios" {
-  hostname = "192.168.1.1:8443"
-  username = local.fortigate_creds.username
-  password = local.fortigate_creds.password
-  insecure = "true"
-}
 
 # AWS Zone for tunnel interface
-# resource "fortios_system_zone" "aws" {
-#   count = local.enable_aws_resources ? 1 : 0
-#
-#   name      = "AWS"
-#   intrazone = "deny"
-#   interface {
-#     interface_name = fortios_vpnipsec_phase1interface.aws_tunnel[0].name
-#   }
-# }
+resource "fortios_system_zone" "aws" {
+
+  name      = "AWS"
+  intrazone = "deny"
+}
 
 # Update existing zones to default deny
 # resource "fortios_system_zone" "servers_update" {

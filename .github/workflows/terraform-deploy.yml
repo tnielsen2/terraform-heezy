@@ -20,6 +20,8 @@ jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
+      shared-heezy: ${{ steps.changes.outputs.shared-heezy }}
+      shared-aws: ${{ steps.changes.outputs.shared-aws }}
       production-heezy: ${{ steps.changes.outputs.production-heezy }}
       production-aws: ${{ steps.changes.outputs.production-aws }}
       dev-heezy: ${{ steps.changes.outputs.dev-heezy }}
@@ -31,6 +33,10 @@ jobs:
         id: changes
         with:
           filters: |
+            shared-heezy:
+              - 'environments/shared/heezy/**'
+            shared-aws:
+              - 'environments/shared/aws/**'
             production-heezy:
               - 'environments/production/heezy/**'
             production-aws:
@@ -70,6 +76,8 @@ jobs:
       max-parallel: 4
       matrix:
         workspace:
+          - { env: "shared", component: "heezy", path: "environments/shared/heezy" }
+          - { env: "shared", component: "aws", path: "environments/shared/aws" }
           - { env: "production", component: "heezy", path: "environments/production/heezy" }
           - { env: "production", component: "aws", path: "environments/production/aws" }
           - { env: "dev", component: "heezy", path: "environments/dev/heezy" }
@@ -82,6 +90,12 @@ jobs:
             echo "run=true" >> $GITHUB_OUTPUT
           else
             case "${{ matrix.workspace.env }}-${{ matrix.workspace.component }}" in
+              "shared-heezy")
+                echo "run=${{ needs.detect-changes.outputs.shared-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
+              "shared-aws")
+                echo "run=${{ needs.detect-changes.outputs.shared-aws == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
               "production-heezy")
                 echo "run=${{ needs.detect-changes.outputs.production-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
                 ;;
@@ -157,6 +171,8 @@ jobs:
       max-parallel: 4
       matrix:
         workspace:
+          - { env: "shared", component: "heezy", path: "environments/shared/heezy" }
+          - { env: "shared", component: "aws", path: "environments/shared/aws" }
           - { env: "production", component: "heezy", path: "environments/production/heezy" }
           - { env: "production", component: "aws", path: "environments/production/aws" }
           - { env: "dev", component: "heezy", path: "environments/dev/heezy" }
@@ -169,6 +185,12 @@ jobs:
             echo "run=true" >> $GITHUB_OUTPUT
           else
             case "${{ matrix.workspace.env }}-${{ matrix.workspace.component }}" in
+              "shared-heezy")
+                echo "run=${{ needs.detect-changes.outputs.shared-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
+              "shared-aws")
+                echo "run=${{ needs.detect-changes.outputs.shared-aws == 'true' }}" >> $GITHUB_OUTPUT
+                ;;
               "production-heezy")
                 echo "run=${{ needs.detect-changes.outputs.production-heezy == 'true' || needs.detect-changes.outputs.shared == 'true' }}" >> $GITHUB_OUTPUT
                 ;;
