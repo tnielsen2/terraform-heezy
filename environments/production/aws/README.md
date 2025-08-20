@@ -1,4 +1,6 @@
-# aws
+# Production AWS Environment
+
+Production AWS infrastructure including VPC, EC2, RDS, ECR, and FortiGate VPN configuration.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements

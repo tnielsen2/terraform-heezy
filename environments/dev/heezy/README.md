@@ -1,4 +1,6 @@
-# heezy
+# Dev Heezy Environment
+
+Development Proxmox VMs and FortiGate interface configuration for testing.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -18,14 +20,15 @@
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_dev_runner"></a> [dev\_runner](#module\_dev\_runner) | ../../../shared/modules/proxmox-vm | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
 | [fortios_system_interface.dev_vlan_1000](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_interface) | resource |
-| [fortios_system_zone.aws](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
 | [aws_secretsmanager_secret_version.fortigate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 | [aws_secretsmanager_secret_version.proxmox](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
@@ -37,5 +40,7 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_linux_vms"></a> [linux\_vms](#output\_linux\_vms) | Linux VM information |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

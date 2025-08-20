@@ -8,15 +8,21 @@ Heezy Infrastructure as Code - Multi-environment Terraform configuration
 terraform-heezy/
 ├── environments/
 │   ├── production/
-│   │   ├── heezy/          # On-prem prod resources
-│   │   └── aws/            # AWS
-│   └── dev/
-│       ├── heezy/          # On-prem dev resources
-│       └── aws/            # AWS
+│   │   ├── heezy/          # Production Proxmox VMs
+│   │   └── aws/            # Production AWS + FortiGate
+│   ├── dev/
+│   │   ├── heezy/          # Dev Proxmox VMs
+│   │   └── aws/            # Dev AWS + FortiGate
+│   └── shared/
+│       ├── heezy/          # Shared FortiGate interfaces
+│       └── aws/            # Shared AWS resources
 ├── shared/
 │   └── modules/
 │       └── proxmox-vm/     # Shared VM module
 └── docs/
+    ├── ANSIBLE_INTEGRATION.md
+    ├── FORTIGATE_IMPORT.md
+    └── HEEZY_SETUP.md
 ```
 
 ## Usage
@@ -43,6 +49,19 @@ terraform apply
 
 # AWS infrastructure
 cd environments/dev/aws
+terraform init
+terraform apply
+```
+
+### Shared Infrastructure
+```bash
+# Shared FortiGate interfaces
+cd environments/shared/heezy
+terraform init
+terraform apply
+
+# Shared AWS resources (if any)
+cd environments/shared/aws
 terraform init
 terraform apply
 ```
