@@ -36,7 +36,8 @@ resource "proxmox_virtual_environment_vm" "vm" {
   }
 
   network_device {
-    bridge = "vmbr0"
+    bridge  = var.vm_bridge
+    vlan_id = var.vm_vlan_id
   }
 
   provisioner "local-exec" {

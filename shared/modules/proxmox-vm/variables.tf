@@ -51,3 +51,15 @@ variable "ansible_playbooks" {
   description = "Comma-separated list of playbooks to run"
   default     = "baseline"
 }
+
+variable "vm_bridge" {
+  type        = string
+  description = "Proxmox bridge interface"
+  default     = "vmbr0"
+}
+
+variable "vm_vlan_id" {
+  type        = number
+  description = "VLAN ID for VM network"
+  default     = null
+}

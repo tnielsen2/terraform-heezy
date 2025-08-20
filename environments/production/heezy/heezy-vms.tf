@@ -22,4 +22,5 @@ module "github_runner" {
   vm_disk_size      = 150
   os_type           = "linux"
   ansible_playbooks = "baseline,github-runner"
+  vm_vlan_id        = 2000
 }
