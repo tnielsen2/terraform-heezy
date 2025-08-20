@@ -7,7 +7,6 @@
 |------|---------|
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 | <a name="requirement_fortios"></a> [fortios](#requirement\_fortios) | ~> 1.20 |
-| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | 0.81.0 |
 
 ## Providers
 
