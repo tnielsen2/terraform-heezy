@@ -9,9 +9,7 @@
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_fortios"></a> [fortios](#provider\_fortios) | n/a |
+No providers.
 
 ## Modules
 
@@ -19,9 +17,7 @@ No modules.
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [fortios_system_zone.dev](https://registry.terraform.io/providers/hashicorp/fortios/latest/docs/resources/system_zone) | resource |
+No resources.
 
 ## Inputs
 
