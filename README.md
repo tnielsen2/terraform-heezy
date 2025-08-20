@@ -73,4 +73,7 @@ terraform apply
 - Access to Proxmox host (192.168.1.144)
 - FortiGate firewall (192.168.1.1)
 
-See `docs/HEEZY_SETUP.md` for detailed setup instructions.
+See documentation in `docs/` for detailed instructions:
+- `HEEZY_SETUP.md` - Initial setup and configuration
+- `ANSIBLE_INTEGRATION.md` - VM configuration management
+- `FORTIGATE_IMPORT.md` - Importing existing FortiGate interfaces

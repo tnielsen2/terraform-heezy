@@ -9,9 +9,18 @@ This setup uses **GitHub Actions workflow dispatch** to trigger Ansible configur
 ```
 terraform-heezy/           # Infrastructure as Code
 ├── environments/
-│   ├── production/heezy/  # Production Proxmox VMs
-│   └── dev/heezy/         # Dev Proxmox VMs
-├── shared/modules/proxmox-vm/  # VM provisioning module
+│   ├── production/
+│   │   ├── heezy/         # Production Proxmox VMs
+│   │   └── aws/           # Production AWS + FortiGate
+│   ├── dev/
+│   │   ├── heezy/         # Dev Proxmox VMs
+│   │   └── aws/           # Dev AWS + FortiGate
+│   └── shared/
+│       ├── heezy/         # Shared FortiGate interfaces
+│       └── aws/           # Shared AWS resources
+├── shared/
+│   └── modules/
+│       └── proxmox-vm/    # Shared VM module
 └── docs/
 
 ansible-heezy/             # Separate Ansible repository
