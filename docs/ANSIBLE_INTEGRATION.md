@@ -204,11 +204,3 @@ ansible_playbooks = "baseline,github-runner"
 ```hcl
 ansible_playbooks = "baseline,custom-app,monitoring"
 ```
-
-## Benefits
-
-- **Automated Configuration**: VMs are automatically configured after provisioning
-- **Separation of Concerns**: Infrastructure and configuration management are separate
-- **Flexibility**: Easy to add new playbooks and roles
-- **Consistency**: Same configuration process across all environments
-- **Auditability**: All configuration changes tracked in Git
