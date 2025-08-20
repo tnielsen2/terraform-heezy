@@ -1,4 +1,4 @@
-resource "fortios_system_interface" "dev_vlan_1000" {
+resource "fortios_system_interface" "prod_vlan_2000" {
   name                  = "prod-vlan-2000"
   vdom                  = "root"
   ip                    = "192.168.200.1 255.255.255.0"
