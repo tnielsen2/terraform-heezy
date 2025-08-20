@@ -5,7 +5,6 @@ resource "fortios_system_interface" "dev_vlan_1000" {
   allowaccess           = "ping https ssh http"
   device_identification = "enable"
   role                  = "lan"
-  snmp_index            = 9
   interface             = "internal7"
   vlanid                = 2000
 
