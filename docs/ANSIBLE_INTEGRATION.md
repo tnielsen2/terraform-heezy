@@ -22,9 +22,9 @@ terraform-heezy/           # Infrastructure as Code
 │   └── modules/
 │       └── proxmox-vm/    # Shared VM module
 └── docs/
-
+# Example ansible code, refer to https://github.com/tnielsen2/ansible-heezy for up to date repo and workflow config
 ansible-heezy/             # Separate Ansible repository
-├── .github/workflows/
+├── .github/workflows/     # https://github.com/tnielsen2/ansible-heezy
 │   └── terraform-triggered.yml
 ├── playbooks/
 │   ├── baseline.yml
@@ -72,6 +72,21 @@ provisioner "local-exec" {
   EOT
 }
 ```
+
+#### What the Provisioner Does:
+
+• **Fetches GitHub Token**: Retrieves a personal access token from AWS Secrets Manager (`all/heezy/github/runner/personal-access-token`) to authenticate with GitHub API
+
+• **Triggers Ansible Workflow**: Makes a REST API call to GitHub Actions to dispatch the `terraform-triggered.yml` workflow in the `ansible-heezy` repository
+
+• **Passes VM Details**: Sends the newly created VM's IP address and specified playbook list as workflow inputs for Ansible to configure the VM
+
+#### Where Secrets Come From:
+
+The GitHub personal access token is stored in **AWS Secrets Manager** at:
+- **Secret Name**: `all/heezy/github/runner/personal-access-token`
+- **Format**: `{"token": "ghp_xxxxxxxxxxxx"}`
+- **Access**: Retrieved using AWS CLI with proper IAM permissions during provisioner execution
 
 ### 3. Module Variables
 
@@ -141,7 +156,9 @@ Store in AWS Secrets Manager:
 
 ### 2. Ansible Repository Setup
 
-The `ansible-heezy` repository should contain:
+The Ansible configuration and workflows are located at: **https://github.com/tnielsen2/ansible-heezy**
+
+The repository contains:
 - **Workflow**: `.github/workflows/terraform-triggered.yml`
 - **Playbooks**: Individual playbook files
 - **Roles**: Ansible roles for configuration
