@@ -14,3 +14,22 @@ resource "fortios_system_interface" "internal7" {
     ]
   }
 }
+
+resource "fortios_system_interface" "users_vlan_200" {
+  name                  = "users-vlan-200"
+  vdom                  = "root"
+  ip                    = "192.168.2.1 255.255.255.0"
+  allowaccess           = "ping https ssh http"
+  device_identification = "enable"
+  role                  = "lan"
+  snmp_index            = 9
+  interface             = "internal7"
+  vlanid                = 200
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
