@@ -7,6 +7,7 @@
 |------|---------|
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 | <a name="requirement_fortios"></a> [fortios](#requirement\_fortios) | ~> 1.20 |
+| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | 0.81.0 |
 
 ## Providers
 
@@ -17,7 +18,9 @@
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_shared_pxe"></a> [shared\_pxe](#module\_shared\_pxe) | ../../../shared/modules/proxmox-vm | n/a |
 
 ## Resources
 
@@ -37,6 +40,7 @@ No modules.
 | [fortios_system_interface.users_vlan_200](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_interface) | resource |
 | [fortios_system_zone.shared](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
 | [fortios_system_zone.users](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
+| [fortios_systemdhcp_server.shared_internal7](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/systemdhcp_server) | resource |
 | [aws_secretsmanager_secret_version.fortigate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 | [aws_secretsmanager_secret_version.proxmox](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
@@ -48,5 +52,7 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_linux_vms"></a> [linux\_vms](#output\_linux\_vms) | Shared Linux VMs |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
