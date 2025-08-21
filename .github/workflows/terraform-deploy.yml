@@ -64,6 +64,7 @@ jobs:
       - name: Get runner credentials from AWS Secrets
         id: get-creds
         run: |
+          set +x
           CREDS=$(aws secretsmanager get-secret-value --secret-id production/heezy/github_runner/aws_credentials --query SecretString --output text)
           ACCESS_KEY=$(echo $CREDS | jq -r '.AWS_ACCESS_KEY_ID')
           SECRET_KEY=$(echo $CREDS | jq -r '.AWS_SECRET_ACCESS_KEY')
@@ -124,12 +125,18 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ needs.get-runner-credentials.outputs.runner-access-key }}
           AWS_SECRET_ACCESS_KEY: ${{ needs.get-runner-credentials.outputs.runner-secret-key }}
         run: |
+          set +x
           TERRAFORM_CREDS=$(aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/productionATerraformStateBackend --role-session-name terraform-session)
           
           export AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId')
           export AWS_SECRET_ACCESS_KEY=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SecretAccessKey')
           export AWS_SESSION_TOKEN=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SessionToken')
           
+          echo "::add-mask::$AWS_ACCESS_KEY_ID"
+          echo "::add-mask::$AWS_SECRET_ACCESS_KEY"
+          echo "::add-mask::$AWS_SESSION_TOKEN"
+          
+          set -x
           terraform init
           terraform plan -no-color -out=tfplan
           terraform show -no-color tfplan > plan.txt
@@ -212,12 +219,18 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ needs.get-runner-credentials.outputs.runner-access-key }}
           AWS_SECRET_ACCESS_KEY: ${{ needs.get-runner-credentials.outputs.runner-secret-key }}
         run: |
+          set +x
           TERRAFORM_CREDS=$(aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/productionATerraformStateBackend --role-session-name terraform-session)
           
           export AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId')
           export AWS_SECRET_ACCESS_KEY=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SecretAccessKey')
           export AWS_SESSION_TOKEN=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SessionToken')
           
+          echo "::add-mask::$AWS_ACCESS_KEY_ID"
+          echo "::add-mask::$AWS_SECRET_ACCESS_KEY"
+          echo "::add-mask::$AWS_SESSION_TOKEN"
+          
+          set -x
           terraform init
           terraform apply -auto-approve
 
