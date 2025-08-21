@@ -92,3 +92,4 @@ resource "fortios_firewall_policy" "allow_github_runner_fw_mgmt" {
   schedule = "always"
   nat      = "disable"
 }
+
