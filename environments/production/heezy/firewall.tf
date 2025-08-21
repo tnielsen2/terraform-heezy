@@ -2,7 +2,7 @@
 
 # Outbound policy: PROD to WAN
 resource "fortios_firewall_policy" "prod_to_wan" {
-  policyid = 100
+  policyid = 200
   name     = "prod-to-wan"
   action   = "accept"
 
@@ -28,4 +28,38 @@ resource "fortios_firewall_policy" "prod_to_wan" {
 
   schedule = "always"
   nat      = "enable"
+}
+
+# Allow github-runner to SERVERS
+resource "fortios_firewall_policy" "allow_github_runner" {
+  policyid = 201
+  name     = "allow-github-runner-mgmt"
+  action   = "accept"
+
+  srcintf {
+    name = "PROD"
+  }
+
+  dstintf {
+    name = "SERVERS"
+  }
+
+  srcaddr {
+    name = "prod-github-runner"
+  }
+
+  dstaddr {
+    name = "all"
+  }
+
+  service {
+    name = "TCP/22"
+  }
+
+  service {
+    name = "TCP/8006"
+  }
+
+  schedule = "always"
+  nat      = "disable"
 }

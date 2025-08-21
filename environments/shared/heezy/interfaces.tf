@@ -1,3 +1,20 @@
+resource "fortios_system_interface" "dmz" {
+  name              = "dmz"
+  vdom              = "root"
+  ip                = "192.168.3.1 255.255.255.0"
+  allowaccess       = ""
+  type              = "physical"
+  monitor_bandwidth = "enable"
+  snmp_index        = 3
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
 resource "fortios_system_interface" "internal7" {
   name              = "internal7"
   vdom              = "root"

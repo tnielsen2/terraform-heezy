@@ -2,7 +2,7 @@
 
 # Outbound policy: DEV to WAN
 resource "fortios_firewall_policy" "dev_to_wan" {
-  policyid = 200
+  policyid = 100
   name     = "dev-to-wan"
   action   = "accept"
 
