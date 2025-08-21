@@ -10,7 +10,7 @@ output "vm_name" {
 
 output "vm_ip" {
   description = "IP address of the VM (requires guest agent)"
-  value       = length(proxmox_virtual_environment_vm.vm.ipv4_addresses) > 1 ? proxmox_virtual_environment_vm.vm.ipv4_addresses[1][0] : null
+  value       = length(proxmox_virtual_environment_vm.vm.ipv4_addresses) > 1 && length(proxmox_virtual_environment_vm.vm.ipv4_addresses[1]) > 0 ? proxmox_virtual_environment_vm.vm.ipv4_addresses[1][0] : null
 }
 
 output "vm_mac" {

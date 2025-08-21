@@ -28,6 +28,13 @@ provider "proxmox" {
   insecure = true
 }
 
+provider "proxmox" {
+  endpoint = "https://192.168.1.144:8006/"
+  username = local.proxmox_creds.username
+  password = local.proxmox_creds.password
+  insecure = true
+}
+
 # FortiGate provider configuration
 provider "fortios" {
   hostname = "192.168.1.1:8443"

@@ -17,6 +17,7 @@ Production Proxmox VMs and FortiGate interface configuration.
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 5.100.0 |
 | <a name="provider_fortios"></a> [fortios](#provider\_fortios) | 1.22.1 |
+| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | 0.81.0 |
 
 ## Modules
 
@@ -28,8 +29,11 @@ Production Proxmox VMs and FortiGate interface configuration.
 
 | Name | Type |
 |------|------|
+| [fortios_firewall_policy.prod_to_wan](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_system_interface.prod_vlan_2000](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_interface) | resource |
 | [fortios_system_zone.prod](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
+| [fortios_systemdhcp_server.prod_vlan_2000](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/systemdhcp_server) | resource |
+| [proxmox_virtual_environment_network_linux_vlan.vlan2000](https://registry.terraform.io/providers/bpg/proxmox/0.81.0/docs/resources/virtual_environment_network_linux_vlan) | resource |
 | [aws_secretsmanager_secret_version.fortigate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 | [aws_secretsmanager_secret_version.proxmox](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 

@@ -17,20 +17,22 @@ Development Proxmox VMs and FortiGate interface configuration for testing.
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 5.100.0 |
 | <a name="provider_fortios"></a> [fortios](#provider\_fortios) | 1.22.1 |
+| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | 0.81.0 |
 
 ## Modules
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_dev_runner"></a> [dev\_runner](#module\_dev\_runner) | ../../../shared/modules/proxmox-vm | n/a |
+No modules.
 
 ## Resources
 
 | Name | Type |
 |------|------|
+| [fortios_firewall_policy.dev_to_wan](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_system_interface.dev_vlan_1000](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_interface) | resource |
 | [fortios_system_zone.aws](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
 | [fortios_system_zone.prod](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
+| [fortios_systemdhcp_server.dev_vlan_1000](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/systemdhcp_server) | resource |
+| [proxmox_virtual_environment_network_linux_vlan.vlan1000](https://registry.terraform.io/providers/bpg/proxmox/0.81.0/docs/resources/virtual_environment_network_linux_vlan) | resource |
 | [aws_secretsmanager_secret_version.fortigate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 | [aws_secretsmanager_secret_version.proxmox](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
@@ -42,7 +44,5 @@ Development Proxmox VMs and FortiGate interface configuration for testing.
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_linux_vms"></a> [linux\_vms](#output\_linux\_vms) | Linux VM information |
+No outputs.
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

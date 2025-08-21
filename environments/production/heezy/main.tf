@@ -21,3 +21,10 @@ provider "proxmox" {
   password = local.proxmox_creds.password
   insecure = true
 }
+
+provider "proxmox" {
+  endpoint = "https://192.168.1.144:8006/"
+  username = local.proxmox_creds.username
+  password = local.proxmox_creds.password
+  insecure = true
+}

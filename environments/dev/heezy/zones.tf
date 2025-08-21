@@ -4,6 +4,6 @@ resource "fortios_system_zone" "prod" {
   intrazone = "allow"
 
   interface {
-    interface_name = "DEV-vlan-1000"
+    interface_name = "dev-vlan-1000"
   }
 }
