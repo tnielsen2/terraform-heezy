@@ -32,7 +32,7 @@ provider "fortios" {
 
 # Update existing zones to default deny
 # resource "fortios_system_zone" "servers_update" {
-#   name      = "SERVERS"
+#   name      = "SHARED"
 #   intrazone = "deny"
 #   interface {
 #     interface_name = "internal7"
@@ -141,7 +141,7 @@ provider "fortios" {
 #   action   = "accept"
 #
 #   srcintf {
-#     name = "SERVERS"
+#     name = "SHARED"
 #   }
 #
 #   dstintf {
@@ -175,7 +175,7 @@ provider "fortios" {
 #   }
 #
 #   dstintf {
-#     name = "SERVERS"
+#     name = "SHARED"
 #   }
 #
 #   srcaddr {
@@ -206,7 +206,7 @@ provider "fortios" {
 #   }
 #
 #   dstintf {
-#     name = "SERVERS"
+#     name = "SHARED"
 #   }
 #
 #   srcaddr {

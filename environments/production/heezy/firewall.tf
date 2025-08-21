@@ -30,7 +30,7 @@ resource "fortios_firewall_policy" "prod_to_wan" {
   nat      = "enable"
 }
 
-# Allow github-runner to SERVERS
+# Allow github-runner to SHARED
 resource "fortios_firewall_policy" "allow_github_runner" {
   policyid = 203
   name     = "allow-github-runner-mgmt-shared"
@@ -41,7 +41,7 @@ resource "fortios_firewall_policy" "allow_github_runner" {
   }
 
   dstintf {
-    name = "SERVERS"
+    name = "SHARED"
   }
 
   srcaddr {
@@ -74,7 +74,36 @@ resource "fortios_firewall_policy" "allow_github_runner_fw_mgmt" {
   }
 
   dstintf {
-    name = "SERVERS"
+    name = "SHARED"
+  }
+
+  srcaddr {
+    name = "prod-github-runner"
+  }
+
+  dstaddr {
+    name = "fortigate-shared-mgmt"
+  }
+
+  service {
+    name = "TCP/8443"
+  }
+
+  schedule = "always"
+  nat      = "disable"
+}
+
+resource "fortios_firewall_policy" "allow_github_runner_shared_fw_mgmt" {
+  policyid = 206
+  name     = "allow-github-runner-shared-fw-mgmt2"
+  action   = "accept"
+
+  srcintf {
+    name = "PROD"
+  }
+
+  dstintf {
+    name = "SHARED"
   }
 
   srcaddr {

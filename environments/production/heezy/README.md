@@ -32,6 +32,7 @@ Production Proxmox VMs and FortiGate interface configuration.
 | [fortios_firewall_address.prod_github_runner](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_policy.allow_github_runner](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewall_policy.allow_github_runner_fw_mgmt](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
+| [fortios_firewall_policy.allow_github_runner_shared_fw_mgmt](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewall_policy.prod_to_wan](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_system_interface.prod_vlan_2000](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_interface) | resource |
 | [fortios_system_zone.prod](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |

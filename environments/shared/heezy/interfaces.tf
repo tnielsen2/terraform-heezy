@@ -50,3 +50,4 @@ resource "fortios_system_interface" "users_vlan_200" {
     ]
   }
 }
+

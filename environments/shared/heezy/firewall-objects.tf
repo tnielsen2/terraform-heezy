@@ -54,3 +54,28 @@ resource "fortios_firewall_address" "fortigate_shared_mgmt" {
     ]
   }
 }
+
+
+resource "fortios_firewall_address" "heezy_users" {
+  name   = "heezy-users-192.168.2.0-24"
+  subnet = "192.168.2.0 255.255.255.0"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
+resource "fortios_firewall_address" "shared_github_runner" {
+  name   = "shared-github-runner"
+  subnet = "192.168.100.10 255.255.255.255"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
