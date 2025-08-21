@@ -14,7 +14,7 @@ terraform-heezy/
 │   │   ├── heezy/          # Dev Proxmox VMs
 │   │   └── aws/            # Dev AWS + FortiGate
 │   └── shared/
-│       ├── heezy/          # Shared FortiGate interfaces
+│       ├── heezy/          # Shared FortiGate and Proxmox resources
 │       └── aws/            # Shared AWS resources
 ├── shared/
 │   └── modules/

@@ -26,3 +26,31 @@ resource "fortios_firewallservice_custom" "tcp_8006" {
     ]
   }
 }
+
+
+resource "fortios_firewallservice_custom" "tcp_8443" {
+  name = "TCP/8443"
+
+  tcp_portrange = "8443"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
+
+# IP objects
+resource "fortios_firewall_address" "fortigate_shared_mgmt" {
+  name   = "fortigate-shared-mgmt"
+  subnet = "192.168.1.1 255.255.255.255"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
