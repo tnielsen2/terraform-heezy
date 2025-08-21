@@ -6,6 +6,9 @@ resource "fortios_system_zone" "users" {
   interface {
     interface_name = "FGT-Switch"
   }
+  interface {
+    interface_name = "users-vlan-200"
+  }
 }
 
 resource "fortios_system_zone" "shared" {
