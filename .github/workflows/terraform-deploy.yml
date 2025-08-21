@@ -123,21 +123,14 @@ jobs:
         if: steps.should-run.outputs.run == 'true'
         working-directory: ${{ matrix.workspace.path }}
         env:
-          RUNNER_ACCESS_KEY: ${{ needs.get-runner-credentials.outputs.runner-access-key }}
-          RUNNER_SECRET_KEY: ${{ needs.get-runner-credentials.outputs.runner-secret-key }}
+          AWS_ACCESS_KEY_ID: ${{ needs.get-runner-credentials.outputs.runner-access-key }}
+          AWS_SECRET_ACCESS_KEY: ${{ needs.get-runner-credentials.outputs.runner-secret-key }}
         run: |
-          TERRAFORM_CREDS=$(AWS_ACCESS_KEY_ID="$RUNNER_ACCESS_KEY" \
-          AWS_SECRET_ACCESS_KEY="$RUNNER_SECRET_KEY" \
-          AWS_DEFAULT_REGION=us-east-2 \
-          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/productionATerraformStateBackend --role-session-name terraform-session)
+          TERRAFORM_CREDS=$(aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/productionATerraformStateBackend --role-session-name terraform-session)
           
           export AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId')
           export AWS_SECRET_ACCESS_KEY=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SecretAccessKey')
           export AWS_SESSION_TOKEN=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SessionToken')
-          
-          echo "::add-mask::$AWS_ACCESS_KEY_ID"
-          echo "::add-mask::$AWS_SECRET_ACCESS_KEY"
-          echo "::add-mask::$AWS_SESSION_TOKEN"
           
           terraform init
           terraform plan -no-color -out=tfplan
@@ -218,21 +211,14 @@ jobs:
         if: steps.should-run.outputs.run == 'true'
         working-directory: ${{ matrix.workspace.path }}
         env:
-          RUNNER_ACCESS_KEY: ${{ needs.get-runner-credentials.outputs.runner-access-key }}
-          RUNNER_SECRET_KEY: ${{ needs.get-runner-credentials.outputs.runner-secret-key }}
+          AWS_ACCESS_KEY_ID: ${{ needs.get-runner-credentials.outputs.runner-access-key }}
+          AWS_SECRET_ACCESS_KEY: ${{ needs.get-runner-credentials.outputs.runner-secret-key }}
         run: |
-          TERRAFORM_CREDS=$(AWS_ACCESS_KEY_ID="$RUNNER_ACCESS_KEY" \
-          AWS_SECRET_ACCESS_KEY="$RUNNER_SECRET_KEY" \
-          AWS_DEFAULT_REGION=us-east-2 \
-          aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/productionATerraformStateBackend --role-session-name terraform-session)
+          TERRAFORM_CREDS=$(aws sts assume-role --role-arn arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/productionATerraformStateBackend --role-session-name terraform-session)
           
           export AWS_ACCESS_KEY_ID=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.AccessKeyId')
           export AWS_SECRET_ACCESS_KEY=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SecretAccessKey')
           export AWS_SESSION_TOKEN=$(echo $TERRAFORM_CREDS | jq -r '.Credentials.SessionToken')
-          
-          echo "::add-mask::$AWS_ACCESS_KEY_ID"
-          echo "::add-mask::$AWS_SECRET_ACCESS_KEY"
-          echo "::add-mask::$AWS_SESSION_TOKEN"
           
           terraform init
           terraform apply -auto-approve
