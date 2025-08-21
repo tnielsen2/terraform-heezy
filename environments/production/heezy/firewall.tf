@@ -92,32 +92,3 @@ resource "fortios_firewall_policy" "allow_github_runner_fw_mgmt" {
   schedule = "always"
   nat      = "disable"
 }
-
-resource "fortios_firewall_policy" "allow_github_runner_shared_fw_mgmt" {
-  policyid = 206
-  name     = "allow-github-runner-shared-fw-mgmt2"
-  action   = "accept"
-
-  srcintf {
-    name = "PROD"
-  }
-
-  dstintf {
-    name = "SHARED"
-  }
-
-  srcaddr {
-    name = "prod-github-runner"
-  }
-
-  dstaddr {
-    name = "fortigate-shared-mgmt"
-  }
-
-  service {
-    name = "TCP/8443"
-  }
-
-  schedule = "always"
-  nat      = "disable"
-}
