@@ -37,6 +37,7 @@ No modules.
 | <a name="input_vm_disk_size"></a> [vm\_disk\_size](#input\_vm\_disk\_size) | Disk size in GB | `number` | `100` | no |
 | <a name="input_vm_memory"></a> [vm\_memory](#input\_vm\_memory) | Memory in MB | `number` | `4096` | no |
 | <a name="input_vm_name"></a> [vm\_name](#input\_vm\_name) | Name of the VM | `string` | n/a | yes |
+| <a name="input_vm_sockets"></a> [vm\_sockets](#input\_vm\_sockets) | Number of CPU sockets | `number` | `1` | no |
 | <a name="input_vm_vlan_id"></a> [vm\_vlan\_id](#input\_vm\_vlan\_id) | VLAN ID for VM network | `number` | `null` | no |
 
 ## Outputs

@@ -22,7 +22,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   cpu {
     cores   = var.vm_cores
-    sockets = 1
+    sockets = var.vm_sockets
   }
 
   memory {

@@ -24,5 +24,11 @@ output "linux_vms" {
       ip   = module.shared_lgtm.vm_ip
       mac  = module.shared_lgtm.vm_mac
     }
+    vm4 = {
+      id   = module.shared_github_runner.vm_id
+      name = module.shared_github_runner.vm_name
+      ip   = module.shared_github_runner.vm_ip
+      mac  = module.shared_github_runner.vm_mac
+    }
   }
 }

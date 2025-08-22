@@ -28,6 +28,12 @@ variable "vm_cores" {
   default     = 2
 }
 
+variable "vm_sockets" {
+  type        = number
+  description = "Number of CPU sockets"
+  default     = 1
+}
+
 variable "vm_memory" {
   type        = number
   description = "Memory in MB"

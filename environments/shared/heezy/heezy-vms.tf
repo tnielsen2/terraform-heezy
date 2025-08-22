@@ -56,3 +56,23 @@ module "shared_lgtm" {
   ansible_playbooks = "prometheus"
   vm_vlan_id        = 1
 }
+
+
+module "shared_github_runner" {
+  source = "../../../shared/modules/proxmox-vm"
+
+  providers = {
+    proxmox = proxmox.proxmox
+  }
+
+  vm_name           = "shared-github-runner"
+  target_node       = "proxmox"
+  proxmox_vm_id     = 105 # ubuntu-2024-vm-template-8-2025
+  vm_disk_size      = 150
+  vm_cores          = 4
+  vm_sockets        = 2
+  vm_memory         = 8192
+  os_type           = "linux"
+  ansible_playbooks = "baseline,github-runner"
+  vm_vlan_id        = 1
+}
