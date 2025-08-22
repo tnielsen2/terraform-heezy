@@ -28,7 +28,7 @@ resource "fortios_systemdhcp_server" "shared_internal7" {
     value = "pxelinux.0"
   }
 
-  reserved_address { #
+  reserved_address {
     id          = 5
     ip          = "192.168.1.14"
     mac         = "bc:24:11:77:fa:ca"
@@ -76,6 +76,13 @@ resource "fortios_systemdhcp_server" "shared_internal7" {
     description = "shared-dnsmasq"
   }
 
+  reserved_address {
+    id          = 20
+    ip          = "192.168.1.10"
+    mac         = "bc:24:11:8c:f6:13"
+    action      = "reserved"
+    description = "shared-lgtm"
+  }
 
   depends_on = [fortios_system_interface.internal7]
 }
