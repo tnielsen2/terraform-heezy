@@ -4,10 +4,14 @@ run-name: Terraform shared-aws - ${{ github.actor }} - ${{ github.sha }}
 on:
   push:
     branches: [main]
-    paths: ['environments/shared/aws/**']
+    paths: 
+      - 'environments/shared/aws/**'
+      - '.github/workflows/terraform-shared-aws-execution.yml'
   pull_request:
     branches: [main]
-    paths: ['environments/shared/aws/**']
+    paths: 
+      - 'environments/shared/aws/**'
+      - '.github/workflows/terraform-shared-aws-execution.yml'
   workflow_dispatch:
 
 concurrency:

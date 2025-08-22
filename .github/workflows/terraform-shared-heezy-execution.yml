@@ -4,10 +4,14 @@ run-name: Terraform shared-heezy - ${{ github.actor }} - ${{ github.sha }}
 on:
   push:
     branches: [main]
-    paths: ['environments/shared/heezy/**']
+    paths: 
+      - 'environments/shared/heezy/**'
+      - '.github/workflows/terraform-shared-heezy-execution.yml'
   pull_request:
     branches: [main]
-    paths: ['environments/shared/heezy/**']
+    paths: 
+      - 'environments/shared/heezy/**'
+      - '.github/workflows/terraform-shared-heezy-execution.yml'
   workflow_dispatch:
 
 concurrency:

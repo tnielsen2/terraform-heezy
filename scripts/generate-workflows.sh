@@ -13,10 +13,14 @@ run-name: Terraform ${workspace_name} - \${{ github.actor }} - \${{ github.sha }
 on:
   push:
     branches: [main]
-    paths: ['${workspace_path}/**']
+    paths: 
+      - '${workspace_path}/**'
+      - '.github/workflows/terraform-${workspace_name}-execution.yml'
   pull_request:
     branches: [main]
-    paths: ['${workspace_path}/**']
+    paths: 
+      - '${workspace_path}/**'
+      - '.github/workflows/terraform-${workspace_name}-execution.yml'
   workflow_dispatch:
 
 concurrency:

@@ -4,10 +4,14 @@ run-name: Terraform production-heezy - ${{ github.actor }} - ${{ github.sha }}
 on:
   push:
     branches: [main]
-    paths: ['environments/production/heezy/**']
+    paths: 
+      - 'environments/production/heezy/**'
+      - '.github/workflows/terraform-production-heezy-execution.yml'
   pull_request:
     branches: [main]
-    paths: ['environments/production/heezy/**']
+    paths: 
+      - 'environments/production/heezy/**'
+      - '.github/workflows/terraform-production-heezy-execution.yml'
   workflow_dispatch:
 
 concurrency:

@@ -4,10 +4,14 @@ run-name: Terraform dev-aws - ${{ github.actor }} - ${{ github.sha }}
 on:
   push:
     branches: [main]
-    paths: ['environments/dev/aws/**']
+    paths: 
+      - 'environments/dev/aws/**'
+      - '.github/workflows/terraform-dev-aws-execution.yml'
   pull_request:
     branches: [main]
-    paths: ['environments/dev/aws/**']
+    paths: 
+      - 'environments/dev/aws/**'
+      - '.github/workflows/terraform-dev-aws-execution.yml'
   workflow_dispatch:
 
 concurrency:
