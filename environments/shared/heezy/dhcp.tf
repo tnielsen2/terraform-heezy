@@ -239,5 +239,14 @@ resource "fortios_systemdhcp_server" "shared_users_vlan_200_dhcp" {
     action = "reserved"
   }
 
+  reserved_address {
+    id          = 20
+    ip          = "192.168.2.12"
+    mac         = "bc:24:11:b0:f0:18"
+    action      = "reserved"
+    description = "shared-github-runner"
+  }
+
+
   depends_on = [fortios_system_interface.users_vlan_200]
 }

@@ -70,7 +70,7 @@ resource "fortios_firewall_address" "heezy_users" {
 
 resource "fortios_firewall_address" "shared_github_runner" {
   name   = "shared-github-runner"
-  subnet = "192.168.100.10 255.255.255.255"
+  subnet = "192.168.2.12 255.255.255.255"
 
   lifecycle {
     ignore_changes = [
