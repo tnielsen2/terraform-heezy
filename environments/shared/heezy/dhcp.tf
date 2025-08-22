@@ -17,13 +17,15 @@ resource "fortios_systemdhcp_server" "shared_internal7" {
 
   # PXE Boot Options for Talos OS
   options {
-    id    = 66 # TFTP Server Name
+    id    = 1
+    code  = 66 # TFTP Server Name
     type  = "string"
     value = "192.168.1.28"
   }
 
   options {
-    id    = 67 # Bootfile Name
+    id    = 2
+    code  = 67 # Bootfile Name
     type  = "string"
     value = "pxelinux.0"
   }
