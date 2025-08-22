@@ -15,6 +15,19 @@ resource "fortios_systemdhcp_server" "shared_internal7" {
     end_ip   = "192.168.1.200"
   }
 
+  # PXE Boot Options for Talos OS
+  options {
+    id    = 66 # TFTP Server Name
+    type  = "string"
+    value = "192.168.1.28"
+  }
+
+  options {
+    id    = 67 # Bootfile Name
+    type  = "string"
+    value = "pxelinux.0"
+  }
+
   reserved_address {
     id     = 1
     ip     = "192.168.1.31"
