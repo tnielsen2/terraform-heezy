@@ -133,7 +133,17 @@ jobs:
           
           set -x
           terraform init
+          terraform plan -no-color -out=tfplan
           terraform apply -auto-approve tfplan
+
+  notify:
+    if: always()
+    needs: [terraform-apply]
+    uses: ./.github/workflows/_discord-notify.yml
+    with:
+      status: \${{ needs.terraform-apply.result == 'success' && 'success' || 'failure' }}
+      workflow-name: Terraform ${workspace_name}
+    secrets: inherit
 EOF
     
     echo "Generated $filename"
@@ -222,6 +232,15 @@ jobs:
           terraform init
           terraform plan -no-color -out=tfplan
           terraform apply -auto-approve tfplan
+
+  notify:
+    if: always()
+    needs: [terraform-all]
+    uses: ./.github/workflows/_discord-notify.yml
+    with:
+      status: ${{ needs.terraform-all.result == 'success' && 'success' || 'failure' }}
+      workflow-name: Terraform All Workspaces
+    secrets: inherit
 EOF
     
     echo "Generated $filename"

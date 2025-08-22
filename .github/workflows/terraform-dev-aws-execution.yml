@@ -124,4 +124,14 @@ jobs:
           
           set -x
           terraform init
+          terraform plan -no-color -out=tfplan
           terraform apply -auto-approve tfplan
+
+  notify:
+    if: always()
+    needs: [terraform-apply]
+    uses: ./.github/workflows/_discord-notify.yml
+    with:
+      status: ${{ needs.terraform-apply.result == 'success' && 'success' || 'failure' }}
+      workflow-name: Terraform dev-aws
+    secrets: inherit
