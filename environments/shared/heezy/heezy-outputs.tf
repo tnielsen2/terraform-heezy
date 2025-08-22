@@ -18,5 +18,11 @@ output "linux_vms" {
       ip   = module.shared_dnsmasq.vm_ip
       mac  = module.shared_dnsmasq.vm_mac
     }
+    vm3 = {
+      id   = module.shared_lgtm.vm_id
+      name = module.shared_lgtm.vm_name
+      ip   = module.shared_lgtm.vm_ip
+      mac  = module.shared_lgtm.vm_mac
+    }
   }
 }
