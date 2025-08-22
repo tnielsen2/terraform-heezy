@@ -21,9 +21,7 @@ Production Proxmox VMs and FortiGate interface configuration.
 
 ## Modules
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_github_runner"></a> [github\_runner](#module\_github\_runner) | ../../../shared/modules/proxmox-vm | n/a |
+No modules.
 
 ## Resources
 
@@ -48,7 +46,5 @@ Production Proxmox VMs and FortiGate interface configuration.
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_linux_vms"></a> [linux\_vms](#output\_linux\_vms) | Linux VM information |
+No outputs.
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
