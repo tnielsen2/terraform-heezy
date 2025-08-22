@@ -9,3 +9,11 @@ repos:
           - --hook-config=--path-to-file=README.md
           - --hook-config=--add-to-existing-file=true
           - --hook-config=--create-file-if-not-exist=true
+  - repo: local
+    hooks:
+      - id: generate-workflows
+        name: Generate Terraform Workflows
+        entry: ./scripts/generate-workflows.sh
+        language: system
+        files: ^environments/
+        pass_filenames: false
