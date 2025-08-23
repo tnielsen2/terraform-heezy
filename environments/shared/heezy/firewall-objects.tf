@@ -41,6 +41,32 @@ resource "fortios_firewallservice_custom" "tcp_8443" {
   }
 }
 
+resource "fortios_firewallservice_custom" "minecraft_19132_udp" {
+  name = "minecraft-19132-udp"
+
+  udp_portrange = "19132"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
+resource "fortios_firewallservice_custom" "minecraft_19133_udp" {
+  name = "minecraft-19133-udp"
+
+  udp_portrange = "19133"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  ]
+}
+
 
 # IP objects
 resource "fortios_firewall_address" "fortigate_shared_mgmt" {
