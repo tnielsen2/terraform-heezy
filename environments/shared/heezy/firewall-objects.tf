@@ -64,7 +64,7 @@ resource "fortios_firewallservice_custom" "minecraft_19133_udp" {
       dynamic_sort_subtable,
       get_all_tables
     ]
-  ]
+  }
 }
 
 

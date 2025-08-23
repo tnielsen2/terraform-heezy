@@ -35,6 +35,8 @@
 | [fortios_firewall_policy.allow_github_runner_shared_fw_mgmt3](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewall_policy.allow_heezy_users_fw_mgmt](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewall_policy.shared_to_wan](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
+| [fortios_firewallservice_custom.minecraft_19132_udp](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
+| [fortios_firewallservice_custom.minecraft_19133_udp](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
 | [fortios_firewallservice_custom.tcp_22](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
 | [fortios_firewallservice_custom.tcp_8006](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
 | [fortios_firewallservice_custom.tcp_8443](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
