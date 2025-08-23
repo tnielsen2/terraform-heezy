@@ -41,6 +41,12 @@ resource "fortios_firewallservice_custom" "tcp_8443" {
   }
 }
 
+# Import existing minecraft services
+import {
+  to = fortios_firewallservice_custom.minecraft_19132_udp
+  id = "minecraft-19132-udp"
+}
+
 resource "fortios_firewallservice_custom" "minecraft_19132_udp" {
   name = "minecraft-19132-udp"
 
@@ -52,6 +58,11 @@ resource "fortios_firewallservice_custom" "minecraft_19132_udp" {
       get_all_tables
     ]
   }
+}
+
+import {
+  to = fortios_firewallservice_custom.minecraft_19133_udp
+  id = "minecraft-19133-udp"
 }
 
 resource "fortios_firewallservice_custom" "minecraft_19133_udp" {
