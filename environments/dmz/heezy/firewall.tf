@@ -23,6 +23,10 @@ resource "fortios_firewall_policy" "dmz_outbound" {
   }
   logtraffic = "all"
   nat        = "enable"
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 # Minecraft remote access policy
@@ -48,6 +52,10 @@ resource "fortios_firewall_policy" "minecraft_remote_access" {
   }
   inspection_mode = "proxy"
   logtraffic      = "all"
+
+  lifecycle {
+    ignore_changes = all
+  }
 
   depends_on = [fortios_firewall_vip.minecraft_server]
 }
@@ -75,6 +83,10 @@ resource "fortios_firewall_policy" "minecraft_survival_remote_access" {
   }
   inspection_mode = "proxy"
   logtraffic      = "all"
+
+  lifecycle {
+    ignore_changes = all
+  }
 
   depends_on = [fortios_firewall_vip.minecraft_survival_server]
 }
