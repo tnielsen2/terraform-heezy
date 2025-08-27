@@ -11,6 +11,10 @@ resource "fortios_firewall_vip" "minecraft_server" {
   mappedport = "19132"
   protocol   = "udp"
   comment    = "DMZ Minecraft Server"
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 resource "fortios_firewall_vip" "minecraft_survival_server" {
@@ -23,4 +27,8 @@ resource "fortios_firewall_vip" "minecraft_survival_server" {
   mappedport = "19133"
   protocol   = "udp"
   comment    = "DMZ Minecraft Survival Server"
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
