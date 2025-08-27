@@ -48,11 +48,11 @@ terraform apply
 
 | Name | Type |
 |------|------|
-| [fortios_firewall_address.minecraft_server](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
-| [fortios_firewall_address.minecraft_survival_server](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_policy.dmz_outbound](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewall_policy.minecraft_remote_access](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewall_policy.minecraft_survival_remote_access](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
+| [fortios_firewall_vip.minecraft_server](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_vip) | resource |
+| [fortios_firewall_vip.minecraft_survival_server](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_vip) | resource |
 | [fortios_system_zone.dmz](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_zone) | resource |
 | [aws_secretsmanager_secret_version.fortigate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 | [aws_secretsmanager_secret_version.proxmox](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |

@@ -49,7 +49,7 @@ resource "fortios_firewall_policy" "minecraft_remote_access" {
   inspection_mode = "proxy"
   logtraffic      = "all"
 
-  depends_on = [fortios_firewall_address.minecraft_server]
+  depends_on = [fortios_firewall_vip.minecraft_server]
 }
 
 # Minecraft survival remote access policy
@@ -76,5 +76,5 @@ resource "fortios_firewall_policy" "minecraft_survival_remote_access" {
   inspection_mode = "proxy"
   logtraffic      = "all"
 
-  depends_on = [fortios_firewall_address.minecraft_survival_server]
+  depends_on = [fortios_firewall_vip.minecraft_survival_server]
 }
