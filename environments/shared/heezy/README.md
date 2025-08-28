@@ -40,6 +40,7 @@
 | [fortios_firewallservice_custom.tcp_22](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
 | [fortios_firewallservice_custom.tcp_8006](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
 | [fortios_firewallservice_custom.tcp_8443](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
+| [fortios_logsyslogd2_setting.syslog_settings](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/logsyslogd2_setting) | resource |
 | [fortios_system_interface.dmz](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_interface) | resource |
 | [fortios_system_interface.internal7](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_interface) | resource |
 | [fortios_system_interface.users_vlan_200](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_interface) | resource |

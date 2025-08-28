@@ -90,3 +90,15 @@ resource "fortios_firewall_policy" "allow_github_runner_shared_fw_mgmt3" {
   schedule = "always"
   nat      = "disable"
 }
+
+resource "fortios_logsyslogd2_setting" "syslog_settings" {
+  status                = "enable"
+  server                = "192.168.1.10"
+  enc_algorithm         = "disable"
+  facility              = "local7"
+  format                = "default"
+  mode                  = "udp"
+  port                  = 514
+  ssl_min_proto_version = "default"
+  syslog_type           = 2
+}
