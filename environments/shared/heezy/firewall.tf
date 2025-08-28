@@ -91,7 +91,7 @@ resource "fortios_firewall_policy" "allow_github_runner_shared_fw_mgmt3" {
   nat      = "disable"
 }
 
-resource "fortios_logsyslogd2_setting" "syslog_settings" {
+resource "fortios_logsyslogd_setting" "syslog_primary" {
   status                = "enable"
   server                = "192.168.1.10"
   enc_algorithm         = "disable"
