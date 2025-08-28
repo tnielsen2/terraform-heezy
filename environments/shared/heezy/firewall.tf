@@ -100,5 +100,5 @@ resource "fortios_logsyslogd_setting" "syslog_primary" {
   mode                  = "udp"
   port                  = 514
   ssl_min_proto_version = "default"
-  syslog_type           = 2
+  syslog_type           = 1
 }
