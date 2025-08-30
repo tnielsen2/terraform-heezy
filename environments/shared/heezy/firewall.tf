@@ -91,6 +91,36 @@ resource "fortios_firewall_policy" "allow_github_runner_shared_fw_mgmt3" {
   nat      = "disable"
 }
 
+resource "fortios_firewall_policy" "allow_heezy_users_to_dnsmasq" {
+  policyid = 309
+  name     = "allow-users-to-shared-dnsmasq"
+  action   = "accept"
+
+  srcintf {
+    name = "USERS"
+  }
+
+  dstintf {
+    name = "SHARED"
+  }
+
+  srcaddr {
+    name = "heezy-users-192.168.2.0-24"
+  }
+
+  dstaddr {
+    name = "shared-dnsmasq"
+  }
+
+  service {
+    name = "UDP/53"
+  }
+
+  schedule = "always"
+  nat      = "disable"
+}
+
+
 resource "fortios_logsyslogd_setting" "syslog_primary" {
   status                = "enable"
   server                = "192.168.1.10"

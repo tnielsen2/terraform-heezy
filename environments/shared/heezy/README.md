@@ -31,15 +31,18 @@
 |------|------|
 | [fortios_firewall_address.fortigate_shared_mgmt](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_address.heezy_users](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
+| [fortios_firewall_address.shared_dnsmasq](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_address.shared_github_runner](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_policy.allow_github_runner_shared_fw_mgmt3](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewall_policy.allow_heezy_users_fw_mgmt](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
+| [fortios_firewall_policy.allow_heezy_users_to_dnsmasq](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewall_policy.shared_to_wan](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewallservice_custom.minecraft_19132_udp](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
 | [fortios_firewallservice_custom.minecraft_19133_udp](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
 | [fortios_firewallservice_custom.tcp_22](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
 | [fortios_firewallservice_custom.tcp_8006](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
 | [fortios_firewallservice_custom.tcp_8443](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
+| [fortios_firewallservice_custom.udp_53](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewallservice_custom) | resource |
 | [fortios_logsyslogd_setting.syslog_primary](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/logsyslogd_setting) | resource |
 | [fortios_system_interface.dmz](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_interface) | resource |
 | [fortios_system_interface.internal7](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/system_interface) | resource |

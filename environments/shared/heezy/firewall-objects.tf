@@ -41,6 +41,19 @@ resource "fortios_firewallservice_custom" "tcp_8443" {
   }
 }
 
+resource "fortios_firewallservice_custom" "udp_53" {
+  name = "UDP/53"
+
+  udp_portrange = "53"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
 # Import existing minecraft services
 import {
   to = fortios_firewallservice_custom.minecraft_19132_udp
@@ -108,6 +121,19 @@ resource "fortios_firewall_address" "heezy_users" {
 resource "fortios_firewall_address" "shared_github_runner" {
   name   = "shared-github-runner"
   subnet = "192.168.2.13 255.255.255.255"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
+
+resource "fortios_firewall_address" "shared_dnsmasq" {
+  name   = "shared-dnsmasq"
+  subnet = "192.168.1.29 255.255.255.255"
 
   lifecycle {
     ignore_changes = [
