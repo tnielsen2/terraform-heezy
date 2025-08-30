@@ -25,6 +25,13 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
     value = "192.168.1.28"
   }
 
+  options {
+    id    = 2
+    code  = 67 # TFTP File
+    type  = "string"
+    value = " ipxe.efi"
+  }
+
   reserved_address {
     id          = 5
     ip          = "192.168.1.14"
