@@ -120,6 +120,35 @@ resource "fortios_firewall_policy" "allow_heezy_users_to_dnsmasq" {
   nat      = "disable"
 }
 
+resource "fortios_firewall_policy" "allow_github_runner_to_dmz" {
+  policyid = 310
+  name     = "allow-github-runner-to-dmz-hosts"
+  action   = "accept"
+
+  srcintf {
+    name = "SHARED"
+  }
+
+  dstintf {
+    name = "DMZ"
+  }
+
+  srcaddr {
+    name = "shared-github-runner"
+  }
+
+  dstaddr {
+    name = "heezy-dmz-192.168.3.0-24"
+  }
+
+  service {
+    name = "TCP/22"
+  }
+
+  schedule = "always"
+  nat      = "disable"
+}
+
 
 resource "fortios_logsyslogd_setting" "syslog_primary" {
   status                = "enable"
