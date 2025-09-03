@@ -25,9 +25,9 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
 
   options {
     id    = 2
-    code  = 67 # TFTP File
+    code  = 67
     type  = "string"
-    value = "pxelinux.0"
+    value = "ipxe.efi"
   }
 
   reserved_address {
