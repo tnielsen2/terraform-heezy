@@ -18,6 +18,13 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
     end_ip   = "192.168.1.200"
   }
 
+  options {
+    id    = 1
+    code  = 43
+    type  = "string"
+    value = "http://192.168.1.28:8080/boot.ipxe"
+  }
+
   reserved_address {
     id          = 5
     ip          = "192.168.1.14"
