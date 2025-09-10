@@ -17,10 +17,10 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
 
   # PXE Boot Options for Talos OS
   options {
-    id    = 1
-    code  = 66 # TFTP Server Name
-    type  = "ip"
-    value = "192.168.1.28"
+    id   = 1
+    code = 66 # TFTP Server Name
+    type = "ip"
+    ip   = "192.168.1.28"
   }
 
   options {
