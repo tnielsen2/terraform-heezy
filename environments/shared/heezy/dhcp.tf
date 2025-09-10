@@ -19,7 +19,7 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   options {
     id    = 1
     code  = 66 # TFTP Server Name
-    type  = "string"
+    type  = "ip"
     value = "192.168.1.28"
   }
 
