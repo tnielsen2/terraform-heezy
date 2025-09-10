@@ -8,8 +8,9 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   default_gateway = "192.168.1.1"
   netmask         = "255.255.255.0"
   dns_service     = "default"
-  next_server     = "192.168.1.28"
-  filename        = "boot.ipxe"
+  # PXE BOOT for Talos OS
+  next_server = "192.168.1.28"
+  filename    = "boot.ipxe"
 
   ip_range {
     id       = 1
