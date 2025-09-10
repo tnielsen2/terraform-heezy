@@ -10,7 +10,7 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   dns_service     = "default"
   # PXE BOOT for Talos OS
   next_server = "192.168.1.28"
-  filename    = "boot.ipxe"
+  filename    = "ipxe.efi"
 
   ip_range {
     id       = 1
