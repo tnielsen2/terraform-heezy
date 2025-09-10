@@ -27,7 +27,7 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
     id    = 2
     code  = 67
     type  = "string"
-    value = "ipxe.efi"
+    value = "boot.ipxe"
   }
 
   reserved_address {
