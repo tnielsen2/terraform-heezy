@@ -21,6 +21,13 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   options {
     id    = 1
     code  = 43
+    type  = "hex"
+    value = "0609687474703a2f2f3139322e3136382e312e32383a383038302f626f6f742e69707865"
+  }
+
+  options {
+    id    = 2
+    code  = 114
     type  = "string"
     value = "http://192.168.1.28:8080/boot.ipxe"
   }
