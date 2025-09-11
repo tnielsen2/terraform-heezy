@@ -8,28 +8,18 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   default_gateway = "192.168.1.1"
   netmask         = "255.255.255.0"
   dns_service     = "default"
-  # PXE BOOT for Talos OS
-  next_server = "192.168.1.28"
-  filename    = "ipxe.efi"
-
   ip_range {
     id       = 1
     start_ip = "192.168.1.10"
     end_ip   = "192.168.1.200"
   }
 
+  # Talos Image Factory PXE Boot
   options {
     id    = 1
-    code  = 43
-    type  = "hex"
-    value = "0609687474703a2f2f3139322e3136382e312e32383a383038302f626f6f742e69707865"
-  }
-
-  options {
-    id    = 2
-    code  = 114
+    code  = 67
     type  = "string"
-    value = "http://192.168.1.28:8080/boot.ipxe"
+    value = "https://pxe.factory.talos.dev/pxe/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba/v1.11.0/metal-amd64"
   }
 
   reserved_address {
