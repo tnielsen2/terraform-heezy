@@ -18,6 +18,13 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   next_server = "192.168.1.28"
   filename    = "ipxe.efi"
 
+  options {
+    id    = 1
+    code  = 114 # Boot script URL
+    type  = "string"
+    value = "http://192.168.1.28:8080/boot.ipxe"
+  }
+
   reserved_address {
     id          = 5
     ip          = "192.168.1.14"
