@@ -14,13 +14,9 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
     end_ip   = "192.168.1.200"
   }
 
-  # Talos Image Factory PXE Boot
-  options {
-    id    = 1
-    code  = 67
-    type  = "string"
-    value = "https://pxe.factory.talos.dev/pxe/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba/v1.11.0/metal-amd64"
-  }
+  # PXE Boot Configuration
+  next_server = "192.168.1.28"
+  filename    = "ipxe.efi"
 
   reserved_address {
     id          = 5
