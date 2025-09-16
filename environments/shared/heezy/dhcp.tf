@@ -18,6 +18,21 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   next_server = "192.168.1.28"
   filename    = "ipxe.efi"
 
+  # HTTP Boot Configuration for HTTPClient vendor class
+  options {
+    id    = 1
+    code  = 60 # Vendor Class Identifier
+    type  = "string"
+    value = "HTTPClient"
+  }
+
+  options {
+    id    = 2
+    code  = 67 # Boot File Name (HTTP URL for HTTPClient)
+    type  = "string"
+    value = "http://192.168.1.28:8080/boot.ipxe"
+  }
+
   reserved_address {
     id          = 5
     ip          = "192.168.1.14"
