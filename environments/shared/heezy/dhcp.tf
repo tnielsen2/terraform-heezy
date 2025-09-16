@@ -30,7 +30,7 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
     id    = 2
     code  = 67 # Boot File Name (HTTP URL for HTTPClient)
     type  = "string"
-    value = "http://192.168.1.28:8080/boot.ipxe"
+    value = "http://192.168.1.28:8080/ipxe.efi"
   }
 
   reserved_address {
