@@ -76,3 +76,22 @@ module "shared_github_runner" {
   ansible_playbooks = "baseline,github-runner"
   vm_vlan_id        = 1
 }
+
+module "shared_omni" {
+  source = "../../../shared/modules/proxmox-vm"
+
+  providers = {
+    proxmox = proxmox.proxmox
+  }
+
+  vm_name           = "shared-omni"
+  target_node       = "proxmox"
+  proxmox_vm_id     = 105 # ubuntu-2024-vm-template-8-2025
+  vm_disk_size      = 150
+  vm_cores          = 2
+  vm_sockets        = 2
+  vm_memory         = 4096
+  os_type           = "linux"
+  ansible_playbooks = "baseline"
+  vm_vlan_id        = 1
+}

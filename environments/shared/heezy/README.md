@@ -23,6 +23,7 @@
 | <a name="module_shared_dnsmasq"></a> [shared\_dnsmasq](#module\_shared\_dnsmasq) | ../../../shared/modules/proxmox-vm | n/a |
 | <a name="module_shared_github_runner"></a> [shared\_github\_runner](#module\_shared\_github\_runner) | ../../../shared/modules/proxmox-vm | n/a |
 | <a name="module_shared_lgtm"></a> [shared\_lgtm](#module\_shared\_lgtm) | ../../../shared/modules/proxmox-vm | n/a |
+| <a name="module_shared_omni"></a> [shared\_omni](#module\_shared\_omni) | ../../../shared/modules/proxmox-vm | n/a |
 | <a name="module_shared_pxe"></a> [shared\_pxe](#module\_shared\_pxe) | ../../../shared/modules/proxmox-vm | n/a |
 
 ## Resources

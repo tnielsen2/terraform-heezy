@@ -30,5 +30,11 @@ output "linux_vms" {
       ip   = module.shared_github_runner.vm_ip
       mac  = module.shared_github_runner.vm_mac
     }
+    vm5 = {
+      id   = module.shared_omni.vm_id
+      name = module.shared_omni.vm_name
+      ip   = module.shared_omni.vm_ip
+      mac  = module.shared_omni.vm_mac
+    }
   }
 }
