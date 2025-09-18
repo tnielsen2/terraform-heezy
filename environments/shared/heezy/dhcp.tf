@@ -89,6 +89,14 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
     description = "shared-lgtm"
   }
 
+  reserved_address {
+    id          = 21
+    ip          = "192.168.1.11"
+    mac         = "bc:24:11:dc:93:00"
+    action      = "reserved"
+    description = "shared-lgtm"
+  }
+
   depends_on = [fortios_system_interface.internal7]
 }
 
