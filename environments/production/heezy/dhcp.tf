@@ -16,13 +16,13 @@ resource "fortios_systemdhcp_server" "prod_vlan_2000" {
     start_ip = "192.168.200.2"
     end_ip   = "192.168.200.254"
   }
-  # github-runner
-  # reserved_address {
-  #   id     = 1
-  #   ip     = "192.168.200.2"
-  #   mac    = "bc:24:11:2d:dd:22"
-  #   action = "assign"
-  # }
+  # Talos 1
+  reserved_address {
+    id     = 1
+    ip     = "192.168.1.15"
+    mac    = "6c:4b:90:53:4b:61"
+    action = "assign"
+  }
 
   depends_on = [fortios_system_interface.prod_vlan_2000]
 }
