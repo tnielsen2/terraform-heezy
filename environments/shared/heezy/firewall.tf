@@ -1,6 +1,6 @@
 # Firewall Policies for Shared Environment
 
-# Outbound policy: PROD to WAN
+# Outbound policy: SHARED to WAN
 resource "fortios_firewall_policy" "shared_to_wan" {
   policyid = 300
   name     = "shared-to-wan"
@@ -61,36 +61,6 @@ resource "fortios_firewall_policy" "allow_heezy_users_fw_mgmt" {
 }
 
 
-
-resource "fortios_firewall_policy" "allow_github_runner_shared_fw_mgmt3" {
-  policyid = 308
-  name     = "allow-github-runner-shared-fw-mgmt3"
-  action   = "accept"
-
-  srcintf {
-    name = "PROD"
-  }
-
-  dstintf {
-    name = "SHARED"
-  }
-
-  srcaddr {
-    name = "shared-github-runner"
-  }
-
-  dstaddr {
-    name = "fortigate-shared-mgmt"
-  }
-
-  service {
-    name = "TCP/8443"
-  }
-
-  schedule = "always"
-  nat      = "disable"
-}
-
 resource "fortios_firewall_policy" "allow_heezy_users_to_dnsmasq" {
   policyid = 309
   name     = "allow-users-to-shared-dnsmasq"
@@ -143,6 +113,36 @@ resource "fortios_firewall_policy" "allow_github_runner_to_dmz" {
 
   service {
     name = "TCP/22"
+  }
+
+  schedule = "always"
+  nat      = "disable"
+}
+
+
+resource "fortios_firewall_policy" "allow_heezy_admin_to_prod_talos" {
+  policyid = 311
+  name     = "allow-users-to-prod-talos"
+  action   = "accept"
+
+  srcintf {
+    name = "USERS"
+  }
+
+  dstintf {
+    name = "PROD"
+  }
+
+  srcaddr {
+    name = "macbook-m4-wireless"
+  }
+
+  dstaddr {
+    name = "talos-nodes"
+  }
+
+  service {
+    name = "TCP/50000"
   }
 
   schedule = "always"

@@ -41,6 +41,19 @@ resource "fortios_firewallservice_custom" "tcp_8443" {
   }
 }
 
+resource "fortios_firewallservice_custom" "tcp_50000" {
+  name = "TCP/50000"
+
+  tcp_portrange = "50000"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
 resource "fortios_firewallservice_custom" "udp_53" {
   name = "UDP/53"
 
@@ -121,6 +134,18 @@ resource "fortios_firewall_address" "heezy_users" {
 resource "fortios_firewall_address" "heezy_dmz" {
   name   = "heezy-dmz-192.168.3.0-24"
   subnet = "192.168.3.0 255.255.255.0"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
+resource "fortios_firewall_address" "macbook_m4_wireless" {
+  name   = "macbook-m4-wireless"
+  subnet = "192.168.2.61 255.255.255.255"
 
   lifecycle {
     ignore_changes = [

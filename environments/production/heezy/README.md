@@ -28,6 +28,12 @@ No modules.
 | Name | Type |
 |------|------|
 | [fortios_firewall_address.prod_github_runner](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
+| [fortios_firewall_address.talos_five](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
+| [fortios_firewall_address.talos_four](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
+| [fortios_firewall_address.talos_one](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
+| [fortios_firewall_address.talos_three](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
+| [fortios_firewall_address.talos_two](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
+| [fortios_firewall_addrgrp.talos_nodes](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_addrgrp) | resource |
 | [fortios_firewall_policy.allow_github_runner](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewall_policy.allow_github_runner_fw_mgmt](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
 | [fortios_firewall_policy.prod_to_wan](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_policy) | resource |
