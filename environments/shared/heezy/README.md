@@ -33,6 +33,7 @@
 | [fortios_firewall_address.fortigate_shared_mgmt](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_address.heezy_dmz](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_address.heezy_users](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
+| [fortios_firewall_address.macbook_m4_admin](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_address.macbook_m4_wireless](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_address.nebula_five](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |
 | [fortios_firewall_address.nebula_four](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/firewall_address) | resource |

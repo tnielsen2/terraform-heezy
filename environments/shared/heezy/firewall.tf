@@ -130,7 +130,7 @@ resource "fortios_firewall_policy" "allow_heezy_admin_to_prod_nebula" {
   }
 
   dstintf {
-    name = "PROD"
+    name = "SHARED"
   }
 
   srcaddr {

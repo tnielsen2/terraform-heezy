@@ -167,6 +167,18 @@ resource "fortios_firewall_address" "shared_github_runner" {
   }
 }
 
+resource "fortios_firewall_address" "macbook_m4_admin" {
+  name   = "macbook-m4-admin"
+  subnet = "192.168.2.24 255.255.255.255"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
 
 resource "fortios_firewall_address" "shared_dnsmasq" {
   name   = "shared-dnsmasq"
