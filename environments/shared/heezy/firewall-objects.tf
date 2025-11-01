@@ -179,3 +179,96 @@ resource "fortios_firewall_address" "shared_dnsmasq" {
     ]
   }
 }
+
+resource "fortios_firewall_address" "nebula_one" {
+  name   = "nebula-1"
+  subnet = "192.168.1.15 255.255.255.255"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
+resource "fortios_firewall_address" "nebula_two" {
+  name   = "nebula-2"
+  subnet = "192.168.1.16 255.255.255.255"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
+resource "fortios_firewall_address" "nebula_three" {
+  name   = "nebula-3"
+  subnet = "192.168.1.17 255.255.255.255"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
+resource "fortios_firewall_address" "nebula_four" {
+  name   = "nebula-4"
+  subnet = "192.168.1.18 255.255.255.255"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
+resource "fortios_firewall_address" "nebula_five" {
+  name   = "nebula-5"
+  subnet = "192.168.1.19 255.255.255.255"
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}
+
+
+
+resource "fortios_firewall_addrgrp" "nebula_nodes" {
+  name = "nebula-microk8-nodes"
+
+  member {
+    name = fortios_firewall_address.nebula_one.name
+  }
+
+  member {
+    name = fortios_firewall_address.nebula_two.name
+  }
+
+  member {
+    name = fortios_firewall_address.nebula_three.name
+  }
+
+  member {
+    name = fortios_firewall_address.nebula_four.name
+  }
+
+  member {
+    name = fortios_firewall_address.nebula_five.name
+  }
+
+  lifecycle {
+    ignore_changes = [
+      dynamic_sort_subtable,
+      get_all_tables
+    ]
+  }
+}

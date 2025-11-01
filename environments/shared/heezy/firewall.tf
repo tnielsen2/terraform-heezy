@@ -120,9 +120,9 @@ resource "fortios_firewall_policy" "allow_github_runner_to_dmz" {
 }
 
 
-resource "fortios_firewall_policy" "allow_heezy_admin_to_prod_talos" {
+resource "fortios_firewall_policy" "allow_heezy_admin_to_prod_nebula" {
   policyid = 311
-  name     = "allow-users-to-prod-talos"
+  name     = "allow-admin-to-prod-nebula"
   action   = "accept"
 
   srcintf {
@@ -134,15 +134,73 @@ resource "fortios_firewall_policy" "allow_heezy_admin_to_prod_talos" {
   }
 
   srcaddr {
-    name = "macbook-m4-wireless"
+    name = "macbook-m4-admin"
   }
 
   dstaddr {
-    name = "talos-nodes"
+    name = "nebula-microk8-nodes"
   }
 
   service {
-    name = "TCP/50000"
+    name = "ALL"
+  }
+
+  schedule = "always"
+  nat      = "disable"
+}
+
+resource "fortios_firewall_policy" "allow_admin_to_dmz" {
+  policyid = 312
+  name     = "allow-admin-to-dmz"
+  action   = "accept"
+
+  srcintf {
+    name = "USERS"
+  }
+
+  dstintf {
+    name = "DMZ"
+  }
+
+  srcaddr {
+    name = "macbook-m4-admin"
+  }
+
+  dstaddr {
+    name = "all"
+  }
+
+  service {
+    name = "ALL"
+  }
+
+  schedule = "always"
+  nat      = "disable"
+}
+
+resource "fortios_firewall_policy" "allow_admin_to_shared" {
+  policyid = 313
+  name     = "allow-admin-to-shared"
+  action   = "accept"
+
+  srcintf {
+    name = "USERS"
+  }
+
+  dstintf {
+    name = "SHARED"
+  }
+
+  srcaddr {
+    name = "macbook-m4-admin"
+  }
+
+  dstaddr {
+    name = "all"
+  }
+
+  service {
+    name = "ALL"
   }
 
   schedule = "always"
