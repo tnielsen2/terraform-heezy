@@ -165,16 +165,12 @@ resource "fortios_systemdhcp_server" "shared_users_vlan_200_dhcp" {
     action = "reserved"
   }
 
-
-
   reserved_address {
     id     = 19
     ip     = "192.168.2.19"
     mac    = "16:13:07:36:93:5b"
     action = "reserved"
   }
-
-
 
   reserved_address {
     id     = 20
@@ -249,12 +245,14 @@ resource "fortios_systemdhcp_server" "shared_users_vlan_200_dhcp" {
     mac    = "00:50:b6:8f:dd:1a"
     action = "reserved"
   }
+
   reserved_address {
     id     = 51
     ip     = "192.168.2.51"
     mac    = "16:e4:a8:7f:12:aa"
     action = "reserved"
   }
+
   reserved_address {
     id     = 55
     ip     = "192.168.2.55"
