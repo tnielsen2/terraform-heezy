@@ -11,7 +11,7 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   ip_range {
     id       = 1
     start_ip = "192.168.1.10"
-    end_ip   = "192.168.1.200"
+    end_ip   = "192.168.1.199"
   }
 
   # PXE Boot Configuration
