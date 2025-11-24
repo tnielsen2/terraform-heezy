@@ -14,27 +14,8 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
     end_ip   = "192.168.1.199"
   }
 
-  # PXE Boot Configuration
-  next_server = "192.168.1.28"
-  filename    = "ipxe.efi"
-
-  # HTTP Boot Configuration for HTTPClient vendor class
-  options {
-    id    = 1
-    code  = 60 # Vendor Class Identifier
-    type  = "string"
-    value = "HTTPClient"
-  }
-
-  options {
-    id    = 2
-    code  = 67 # Boot File Name (HTTP URL for HTTPClient)
-    type  = "string"
-    value = "http://192.168.1.28:8080/ipxe.efi"
-  }
-
   reserved_address {
-    id          = 5
+    id          = 14
     ip          = "192.168.1.14"
     mac         = "bc:24:11:77:fa:ca"
     action      = "reserved"
@@ -42,7 +23,15 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   }
 
   reserved_address {
-    id          = 9
+    id          = 20
+    ip          = "192.168.1.20"
+    mac         = "0c:c4:7a:1b:ba:d3"
+    action      = "reserved"
+    description = "heezy-big-boi - SuperMicro IPMI"
+  }
+
+  reserved_address {
+    id          = 21
     ip          = "192.168.1.21"
     mac         = "0c:c4:7a:15:99:80"
     action      = "reserved"
@@ -50,7 +39,7 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   }
 
   reserved_address {
-    id          = 12
+    id          = 23
     ip          = "192.168.1.23"
     mac         = "bc:24:11:87:6b:6b"
     action      = "reserved"
@@ -58,7 +47,7 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   }
 
   reserved_address {
-    id          = 16
+    id          = 26
     ip          = "192.168.1.26"
     mac         = "00:26:98:a6:59:40"
     action      = "reserved"
@@ -66,7 +55,7 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   }
 
   reserved_address {
-    id          = 18
+    id          = 28
     ip          = "192.168.1.28"
     mac         = "bc:24:11:1b:ae:38"
     action      = "reserved"
@@ -74,15 +63,7 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   }
 
   reserved_address {
-    id          = 19
-    ip          = "192.168.1.29"
-    mac         = "bc:24:11:a8:66:89"
-    action      = "reserved"
-    description = "shared-dnsmasq"
-  }
-
-  reserved_address {
-    id          = 20
+    id          = 10
     ip          = "192.168.1.10"
     mac         = "bc:24:11:8c:f6:13"
     action      = "reserved"
@@ -90,11 +71,19 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   }
 
   reserved_address {
-    id          = 21
+    id          = 11
     ip          = "192.168.1.11"
     mac         = "bc:24:11:dc:93:00"
     action      = "reserved"
     description = "shared-lgtm"
+  }
+
+  reserved_address {
+    id          = 29
+    ip          = "192.168.1.29"
+    mac         = "bc:24:11:a8:66:89"
+    action      = "reserved"
+    description = "shared-dnsmasq"
   }
 
   depends_on = [fortios_system_interface.internal7]
