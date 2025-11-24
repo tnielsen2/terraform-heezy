@@ -268,6 +268,13 @@ resource "fortios_systemdhcp_server" "shared_users_vlan_200_dhcp" {
     description = "macbookm4-trent-wireless"
   }
 
+  reserved_address {
+    id          = 66
+    ip          = "192.168.2.66"
+    mac         = "ec:8c:a2:27:3b:f0"
+    action      = "reserved"
+    description = "ruckus-ap"
+  }
 
   depends_on = [fortios_system_interface.users_vlan_200]
 }
