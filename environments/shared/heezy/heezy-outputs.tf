@@ -36,5 +36,11 @@ output "linux_vms" {
       ip   = module.shared_omni.vm_ip
       mac  = module.shared_omni.vm_mac
     }
+    vm6 = {
+      id   = module.tailscale_exit_node.vm_id
+      name = module.tailscale_exit_node.vm_name
+      ip   = module.tailscale_exit_node.vm_ip
+      mac  = module.tailscale_exit_node.vm_mac
+    }
   }
 }
