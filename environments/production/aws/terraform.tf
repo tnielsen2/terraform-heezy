@@ -3,7 +3,6 @@ terraform {
     bucket       = "terraform-heezy-state"
     key          = "production/aws/terraform.tfstate"
     region       = "us-east-2"
-    use_lockfile = true
     encrypt      = true
     kms_key_id   = "755825ea-0113-4a60-90c9-1f79d49d7079"
   }
