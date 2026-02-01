@@ -86,6 +86,46 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
     description = "shared-dnsmasq"
   }
 
+  reserved_address {
+    id          = 15
+    ip          = "192.168.1.15"
+    mac         = "6c:4b:90:53:4b:61"
+    action      = "reserved"
+    description = "nebula-1 - k8s node"
+  }
+
+  reserved_address {
+    id          = 16
+    ip          = "192.168.1.16"
+    mac         = "6c:4b:90:2b:9a:9c"
+    action      = "reserved"
+    description = "nebula-2 - k8s node"
+  }
+
+  reserved_address {
+    id          = 17
+    ip          = "192.168.1.17"
+    mac         = "6c:4b:90:54:67:5e"
+    action      = "reserved"
+    description = "nebula-3 - k8s node"
+  }
+
+  reserved_address {
+    id          = 18
+    ip          = "192.168.1.18"
+    mac         = "6c:4b:90:18:e5:d1"
+    action      = "reserved"
+    description = "nebula-4 - k8s node"
+  }
+
+  reserved_address {
+    id          = 19
+    ip          = "192.168.1.19"
+    mac         = "6c:4b:90:55:a5:e4"
+    action      = "reserved"
+    description = "nebula-5 - k8s node"
+  }
+
   depends_on = [fortios_system_interface.internal7]
 }
 
