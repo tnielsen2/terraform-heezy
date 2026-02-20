@@ -55,14 +55,6 @@ resource "fortios_systemdhcp_server" "shared_internal7_dhcp" {
   }
 
   reserved_address {
-    id          = 28
-    ip          = "192.168.1.28"
-    mac         = "bc:24:11:1b:ae:38"
-    action      = "reserved"
-    description = "shared-pxe"
-  }
-
-  reserved_address {
     id          = 10
     ip          = "192.168.1.10"
     mac         = "bc:24:11:8c:f6:13"
