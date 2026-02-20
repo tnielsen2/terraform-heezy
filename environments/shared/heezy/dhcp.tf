@@ -220,7 +220,7 @@ resource "fortios_systemdhcp_server" "shared_users_vlan_200_dhcp" {
 
   reserved_address {
     id          = 24
-    ip          = "192.168.2.24"
+    ip          = "192.168.2.150"
     mac         = "5a:1b:14:78:ed:ab"
     action      = "reserved"
     description = "macbook-m4-admin"
